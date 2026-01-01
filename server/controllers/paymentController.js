@@ -1,3 +1,5 @@
+const Midtrans = require('midtrans-client');
+
 // --- Inisialisasi Midtrans Snap ---
 const snap = new Midtrans.Snap({
     isProduction: false,

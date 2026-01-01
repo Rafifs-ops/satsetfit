@@ -1,7 +1,7 @@
-import 'dotenv/config'; // Muat environment variables
-import express from 'express';
+require('dotenv').config();
+const express = require('express');
 const mongoose = require('mongoose');
-import cors from 'cors';
+const cors = require('cors');
 
 const app = express();
 const port = 8080; // Port untuk server
