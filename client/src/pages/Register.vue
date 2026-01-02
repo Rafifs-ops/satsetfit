@@ -20,7 +20,7 @@ const password = ref(''); // Tempat penampungan data password dari form Register
 
 async function register() {
 
-    const api = 'https://localhost:8080/api/auth/register'
+    const api = 'http://localhost:8080/api/auth/register'
     const dataRegister = {
         username: username.value,
         password: password.value,
@@ -30,16 +30,29 @@ async function register() {
     }
 
     // PROSES MENAMBAHKAN DATA KE DATABASE
-    await fetch(api, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataRegister)
-    })
-    // AKHIR PROSES MENAMBAHKAN DATA KE DATABASE
+    try {
+        const response = await fetch(api, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataRegister)
+        });
 
-    router.push({ name: "Login" }); // Mengarahkan ke Login page
+        const result = await response.json();
+
+        if (!response.ok) {
+            // Jika backend return error (misal email duplikat)
+            alert(result.msg || "Registrasi gagal");
+            return; // Stop, jangan pindah halaman
+        }
+
+        // Jika sukses
+        router.push({ name: "Login" }); // Mengarahkan ke Login page
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Terjadi kesalahan jaringan");
+    }
+    // AKHIR PROSES MENAMBAHKAN DATA KE DATABASE
 }
 </script>
 

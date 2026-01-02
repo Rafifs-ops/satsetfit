@@ -1,19 +1,22 @@
 const User = require('../models/User');
+const mongoose = require('mongoose');
 
 exports.validatePremExp = async (req, res) => {
     try {
         const { id } = req.body;
-        const now = new Date(); // Mengambil waktu sekarang (realtime)
-        const expiryDate = User.findOne({ _id: ObjectId(id) }).premiumExpiresAt;
+        const now = new Date();
 
-        // Jika waktu sekarang LEBIH BESAR dari waktu expiry (sudah lewat)
-        if (now > expiryDate) {
-            // Update database: cabut status premium
+        // 2. Gunakan mongoose.Types.ObjectId dan await
+        const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
+
+        if (!user) return; // Handle jika user tidak ada
+
+        const expiryDate = user.premiumExpiresAt;
+
+        if (expiryDate && now > expiryDate) { // Cek expiryDate ada isinya atau null
             await User.updateOne(
-                { _id: ObjectId(id) },
-                {
-                    $set: { isPremium: false }
-                }
+                { _id: user._id }, // Gunakan user._id yang sudah didapat
+                { $set: { isPremium: false, premiumExpiresAt: null } }
             );
         }
     }
@@ -23,20 +26,20 @@ exports.validatePremExp = async (req, res) => {
 }
 
 exports.upgradePrem = async (req, res) => {
-
     const { id } = req.body;
-
-    // --- MENENTUKAN EXPIRE DARI FITUR PREMIUM ---
     const now = new Date();
-    const expiryDate = new Date(now.setDate(now.getDate() + 30)); // Menambahkan 30 hari dari hari ini
+    const expiryDate = new Date(now.setDate(now.getDate() + 30));
 
+    // 3. Gunakan mongoose.Types.ObjectId
     await User.updateOne(
-        { _id: ObjectId(id) },
+        { _id: new mongoose.Types.ObjectId(id) },
         {
             $set: {
                 isPremium: true,
-                premiumExpiresAt: expiryDate // Simpan tanggal kedaluwarsa
+                premiumExpiresAt: expiryDate
             }
         }
     );
+    // Tambahkan res.json() agar client tahu proses selesai
+    res.status(200).json({ msg: "Upgrade success" });
 }
