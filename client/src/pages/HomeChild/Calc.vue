@@ -12,19 +12,19 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useCalculator } from '@/composables/useCalculator';
 import { useAuthStore } from '@/stores/auth';
 
-// Proses pengambilan statusPremium
-const statusPremium = authStore.user.isPremium;
-const isPremium = computed(() => { return statusPremium === true });
-
 // Mendapatkan data auth dan status login
 const authStore = useAuthStore();
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
+
+// Proses pengambilan statusPremium
+const statusPremium = authStore.user.isPremium;
+const isPremium = computed(() => { return statusPremium === true });
 
 const resultSection = ref(null); // Mendapatkan section untuk target scroll otomatis
 
 // Validasi masa status premium
 onMounted(async () => {
-    await fetch('https://localhost:8080/api/premium/validate-exp', {
+    await fetch('http://localhost:8080/api/premium/validate-exp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

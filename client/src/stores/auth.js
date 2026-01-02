@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -12,20 +11,35 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async login(username, password) {
             try {
-                // Panggil API Backend yang kita buat di Tahap 2
-                const res = await axios.post('http://localhost:8080/api/auth/login', { username, password })
+                const response = await fetch('http://localhost:8080/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username, password: password })
+                });
 
-                this.token = res.data.token
-                this.user = res.data.user // isi: objek
+                // 1. Cek status HTTP (Fetch tidak otomatis error jika 400/500)
+                if (!response.ok) {
+                    // Ambil pesan error dari backend jika ada
+                    const errorData = await response.json();
+                    throw new Error(errorData.msg || 'Login gagal');
+                }
 
-                // Simpan ke LocalStorage agar tidak hilang saat refresh
-                localStorage.setItem('token', this.token)
-                localStorage.setItem('user', JSON.stringify(this.user))
+                // 2. Parse JSON
+                const data = await response.json();
 
-                return true
+                // 3. Akses data LANGSUNG (Tanpa .data)
+                this.token = data.token;
+                this.user = data.user;
+
+                // Simpan ke LocalStorage
+                localStorage.setItem('token', this.token);
+                localStorage.setItem('user', JSON.stringify(this.user));
+
+                return true;
+
             } catch (error) {
-                console.error("Login gagal", error)
-                throw error
+                console.error("Login gagal:", error.message);
+                throw error; // Lempar ulang agar bisa ditangkap di Login.vue
             }
         },
         logout() {

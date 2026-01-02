@@ -26,7 +26,7 @@ async function handleUpgrade() {
     isLoading.value = true;
     try {
         // 1. Panggil backend untuk membuat transaksi
-        const response = await fetch('createTransactionUrl', {
+        const response = await fetch('http://localhost:8080/api/create-transaction/payment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ async function handleUpgrade() {
                 // 3. Update status user di Firestore
                 const id = authStore.user.id;
 
-                await fetch('https://localhost:8080/api/premium/upgrade-prem', {
+                await fetch('http://localhost:8080/api/premium/upgrade-prem', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

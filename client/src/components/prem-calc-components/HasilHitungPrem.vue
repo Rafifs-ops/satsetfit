@@ -23,7 +23,7 @@ async function simpanHasil() {
         };
 
         // Menambahkan objek/nilai baru ke array 'historyResults'
-        await fetch('https://localhost:8080/api/save/calc-result', {
+        await fetch('http://localhost:8080/api/save/calc-result', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

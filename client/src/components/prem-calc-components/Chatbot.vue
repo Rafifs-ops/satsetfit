@@ -80,7 +80,7 @@ async function sendMessage() {
     // 4. Proses mengirim pesan ke gemini
     try {
         // Kofigurasi API
-        const apiUrl = `https://localhost:8080/api/ai/chatbot`;
+        const apiUrl = `http://localhost:8080/api/ai/chatbot`;
 
         // --- Siapkan History Chat (Seluruh isi chat AI dengan user) ---
         // isi historyContent adalah array(objek)
