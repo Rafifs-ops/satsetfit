@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 const articles = ref([]);
 onMounted(async () => {
-    await fetch('https://localhost:8080/api/data/articles').then(e => e.json).then(data => articles = data); // Mendapatkan data
+    await fetch('http://localhost:8080/api/data/articles').then(e => e.json).then(data => articles.value = data); // Mendapatkan data
 })
 </script>
 

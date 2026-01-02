@@ -1,6 +1,6 @@
 const User = require('../models/User');
 
-exports.saveCalcResult( async (req, res) => {
+exports.saveCalcResult = async (req, res) => {
     const {id, date, bmi, bmr, tdde} = req.body;
     const hasilHitung = {
         date: date,
@@ -10,4 +10,4 @@ exports.saveCalcResult( async (req, res) => {
     };
 
     await User.updateOne({_id: ObjectId(id)}, {$push: {historyResults: hasilHitung}})
-})
+}
