@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 const articles = ref([]);
 onMounted(async () => {
-    await fetch('http://localhost:8080/api/data/articles').then(e => e.json).then(data => articles.value = data); // Mendapatkan data
+    await fetch('http://localhost:8080/api/data/articles').then(e => e.json()).then(data => articles.value = data); // Mendapatkan data
 })
 </script>
 
@@ -17,7 +17,7 @@ onMounted(async () => {
                     <div v-for="article in articles" :key="article.id"
                         class="col-lg-4 col-md-6 d-flex flex-wrap align-items-stretch">
                         <div class="card h-100 w-100 article-card">
-                            <img :src="article.imgThumb" class="card-img-top" :alt="article.title">
+                            <img :src="article.img_thumb" class="card-img-top" :alt="article.title">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ article.title }}</h5>
                                 <p class="card-text flex-grow-1">{{ article.description }}</p>
