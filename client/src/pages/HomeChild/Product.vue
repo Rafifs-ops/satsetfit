@@ -35,7 +35,7 @@ const formatRupiah = (number) => {
 
                 <div class="row g-4 d-flex justify-content-center flex-wrap">
 
-                    <div v-for="product in products" :key="product.id" class="col-12 col-md-6 col-lg-4">
+                    <div v-for="product in products" :key="product._id" class="col-12 col-md-6 col-lg-4">
                         <div class="card h-100 border-0 shadow-sm product-card">
                             <img :src="product.product_img" class="card-img-top" alt="Foto Produk">
 
@@ -49,19 +49,19 @@ const formatRupiah = (number) => {
 
                                 <!--Triger Modal-->
                                 <button type="button" class="btn btn-custom mt-2" data-bs-toggle="modal"
-                                    :data-bs-target="'#modal-' + product.id">
+                                    :data-bs-target="'#modal-' + product._id">
                                     Deskripsi Produk
                                 </button>
                             </div>
                         </div>
 
                         <!-- Modal -->
-                        <div class="modal fade" :id="'modal-' + product.id" tabindex="-1"
-                            :aria-labelledby="'modalLabel-' + product.id" aria-hidden="true">
+                        <div class="modal fade" :id="'modal-' + product._id" tabindex="-1"
+                            :aria-labelledby="'modalLabel-' + product._id" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" :id="'modalLabel-' + product.id">{{
+                                        <h1 class="modal-title fs-5" :id="'modalLabel-' + product._id">{{
                                             product.product_name }}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>

@@ -35,15 +35,6 @@ export const useAuthStore = defineStore('auth', {
                 localStorage.setItem('token', this.token);
                 localStorage.setItem('user', JSON.stringify(this.user));
 
-                // 5 . validasi masa premium
-                await fetch('http://localhost:8080/api/premium/validate-exp', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ data: data.user.id })
-                })
-
                 return true;
 
             } catch (error) {
@@ -56,6 +47,49 @@ export const useAuthStore = defineStore('auth', {
             this.user = null
             localStorage.removeItem('token')
             localStorage.removeItem('user')
+        },
+        async checkPremiumStatus() {
+            // Jangan jalankan jika tidak ada user/token
+            if (!this.user || !this.token) return;
+
+            try {
+                await fetch('http://localhost:8080/api/premium/validate-exp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: this.user.id })
+                });
+            } catch (error) {
+                console.error("Gagal validasi premium:", error);
+            }
+        },
+        async refreshUserData() {
+            if (!this.user || !this.token) return;
+
+            try {
+                const response = await fetch('http://localhost:8080/api/auth/me', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: this.user.id })
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+
+                    // Update state Pinia
+                    this.user = userData;
+
+                    // Update LocalStorage agar sinkron
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                    return true;
+                }
+            } catch (error) {
+                console.error("Gagal refresh data user:", error);
+            }
         }
     }
 })

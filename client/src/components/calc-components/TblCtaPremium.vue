@@ -51,7 +51,7 @@ async function handleUpgrade() {
                 console.log('Payment Success:', result);
                 alert('Pembayaran berhasil! Akun Anda telah di-upgrade.');
 
-                // 3. Update status user di Firestore
+                // 3. Update status user di database
                 const id = authStore.user.id;
 
                 await fetch('http://localhost:8080/api/premium/upgrade-prem', {
@@ -59,10 +59,10 @@ async function handleUpgrade() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(id)
+                    body: JSON.stringify({id: id})
                 });
 
-
+                await authStore.refreshUserData();
                 isLoading.value = false;
                 closePremiumModal();
                 window.location.reload(); // Muat ulang halaman untuk refresh status premium

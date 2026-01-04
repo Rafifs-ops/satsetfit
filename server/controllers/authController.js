@@ -55,3 +55,16 @@ exports.login = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+// Tambahkan fungsi ini untuk mengambil data user terbaru
+exports.getMe = async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const user = await User.findById(id).select('-password'); 
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+};

@@ -8,7 +8,7 @@ import TblCtaPremium from '@/components/calc-components/TblCtaPremium.vue';
 import RiwayatHasil from '@/components/prem-calc-components/RiwayatHasil.vue';
 import Chatbot from '@/components/prem-calc-components/Chatbot.vue';
 import NotLoginYet from '@/components/NotLoginYet.vue';
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useCalculator } from '@/composables/useCalculator';
 import { useAuthStore } from '@/stores/auth';
 
@@ -17,13 +17,13 @@ const authStore = useAuthStore();
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
 
 // Proses pengambilan statusPremium
-const isPremium = authStore.user?.isPremium;
+const isPremium = computed(() => authStore.user?.isPremium === true);
 
 const resultSection = ref(null); // Mendapatkan section untuk target scroll otomatis
 
 // Tempat penyimpanan input data dari user dan nilai default
 const inputData = ref({
-    jenisKelamin: authStore.user.jenis_kelamin,
+    jenisKelamin: authStore.user?.jenis_kelamin,
     usia: 0,
     beratBadan: 0,
     tinggiBadan: 0,

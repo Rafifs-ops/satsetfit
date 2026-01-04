@@ -5,8 +5,7 @@ import { useAuthStore } from '@/stores/auth';
 const authStore = useAuthStore();
 
 // Proses pengambilan statusPremium
-const statusPremium = authStore.user.isPremium;
-const isPremium = computed(() => { return statusPremium === true });
+const isPremium = computed(() => authStore.user?.isPremium === true);
 </script>
 
 <template>
