@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 exports.register = async (req, res) => {
     try {
@@ -61,7 +62,15 @@ exports.getMe = async (req, res) => {
     const { id } = req.body;
 
     try {
-        const user = await User.findById(id).select('-password'); 
+        const res = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
+        const user = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            isPremium: user.isPremium,
+            jenis_kelamin: user.jenis_kelamin,
+            historyResults: user.historyResults
+        }
         res.json(user);
     } catch (err) {
         console.error(err.message);

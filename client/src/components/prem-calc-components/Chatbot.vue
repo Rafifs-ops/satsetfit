@@ -1,6 +1,7 @@
 <script setup>
 import { ref, nextTick } from 'vue';
 import { defineProps, toRefs } from 'vue';
+import { marked } from 'marked'; // Tambahkan ini
 
 // --- MENERIMA DATA HASIL HITUNG KALKUATOR MELALUI PROPS ---
 const props = defineProps({ // Menerima data hasil perhitungan dan input data dari komponen induk
@@ -118,14 +119,13 @@ async function sendMessage() {
         if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
         const result = await response.json(); // Menyimpan respon AI di variabel ini
-        const responText = result.candidates[0].content.parts[0].text; // Mengakses text dari respon AI
 
         // Hapus pesan loading
         messages.value.pop();
 
         // 5. Memberikan respon AI
         messages.value.push({
-            text: responText,
+            text: result.result,
             role: 'ai'
         });
 
@@ -135,13 +135,21 @@ async function sendMessage() {
         messages.value.pop();
         // Tampilkan pesan error ke pengguna di dalam chat
         messages.value.push({
-            text: 'Maaf, terjadi kesalahan saat mencoba terhubung. Silakan coba lagi.',
+            text: `Maaf, terjadi kesalahan saat mencoba terhubung. Silakan coba lagi. error: ${error}`,
             role: 'ai'
         });
         scrollToBottom(); // Pastikan scroll ke pesan error
     }
 }
 // --- AKHIR CHATBOT ---
+
+const renderMarkdown = (text) => {
+    try {
+        return marked.parse(text);
+    } catch (e) {
+        return text; // Fallback jika error
+    }
+};
 </script>
 
 <template>
@@ -160,8 +168,8 @@ async function sendMessage() {
 
                     <div class="chat-window" ref="chatWindow">
                         <div v-for="message in messages" :key="message.id"
-                            :class="['chat-message', message.role === 'user' ? 'user-message' : 'ai-message']">
-                            {{ message.text }}
+                            :class="['chat-message', message.role === 'user' ? 'user-message' : 'ai-message', 'markdown-body']"
+                            v-html="renderMarkdown(message.text)">
                         </div>
                     </div>
 
@@ -274,9 +282,8 @@ async function sendMessage() {
 }
 
 .user-message {
-    background-color: #1B4242;
+    background-color: #5ca3a3;
     /* Dark Teal untuk pengguna */
-    color: #ffffff;
     align-self: flex-end;
     /* Pengguna di kanan */
     border-bottom-right-radius: 0.25rem;
@@ -332,5 +339,49 @@ async function sendMessage() {
 
 .chat-window::-webkit-scrollbar-thumb:hover {
     background: #1B4242;
+}
+
+/* Tambahkan style khusus untuk konten Markdown */
+.markdown-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #374151;
+    /* Warna teks abu gelap yang nyaman */
+}
+
+/* Style untuk list agar rapi */
+.markdown-body :deep(ul),
+.markdown-body :deep(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-body :deep(li) {
+    margin-bottom: 0.25rem;
+}
+
+/* Style untuk Bold */
+.markdown-body :deep(strong) {
+    font-weight: 700;
+    color: #111827;
+    /* Hitam pekat untuk penekanan */
+}
+
+/* Style untuk Heading kecil */
+.markdown-body :deep(h3),
+.markdown-body :deep(h4) {
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+/* Style untuk paragraf */
+.markdown-body :deep(p) {
+    margin-bottom: 0.75rem;
+}
+
+.markdown-body :deep(p:last-child) {
+    margin-bottom: 0;
 }
 </style>

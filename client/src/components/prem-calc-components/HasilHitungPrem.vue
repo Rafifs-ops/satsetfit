@@ -33,6 +33,8 @@ async function simpanHasil() {
             body: JSON.stringify(newResult)
         });
 
+        await authStore.refreshUserData();
+
         alert("Hasil Kalkuator berhasil disimpan....")
         window.location.reload(); // Muat ulang halaman untuk refresh untuk update atau tambah history baru
 

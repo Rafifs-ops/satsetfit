@@ -13,16 +13,17 @@ exports.saveCalcResult = async (req, res) => {
 
         // 3. Mapping data ke nama field yang SESUAI di User.js
         const hasilHitung = {
-            date: date,          // Field 'date' sama
-            hasilBmi: bmi,       
-            hasilBmr: bmr,       
-            hasilTdde: tdde    
+            date: date,          
+            hasilBmi: Number(bmi),       
+            hasilBmr: Number(bmr),       
+            hasilTdde: Number(tdde)    
         };
 
         // 4. Lakukan update
         const result = await User.updateOne(
             { _id: new mongoose.Types.ObjectId(id) },
-            { $push: { historyResults: hasilHitung } }
+            { $push: { historyResults: hasilHitung } },
+            { runValidators: true }
         );
 
         // 5. Cek hasil update

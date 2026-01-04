@@ -38,9 +38,9 @@ const savedResults = computed(() => { // Mendapatkan array historyResults dari d
                         <div v-for="result in savedResults" :key="result.id" class="result-card">
                             <div class="result-date">{{ result.date }}</div>
                             <div class="result-stats">
-                                <span><strong>BMI:</strong> {{ result.bmi }}</span>
-                                <span><strong>BMR:</strong> {{ result.bmr }} kkal</span>
-                                <span><strong>TDEE:</strong> {{ result.tdde }} kkal</span>
+                                <span><strong>BMI:</strong> {{ result.hasilBmi }}</span>
+                                <span><strong>BMR:</strong> {{ result.hasilBmr }} kkal</span>
+                                <span><strong>TDEE:</strong> {{ result.hasilTdde }} kkal</span>
                             </div>
                         </div>
                     </div>
