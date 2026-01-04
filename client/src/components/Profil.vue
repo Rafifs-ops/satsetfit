@@ -19,7 +19,7 @@ const isPremium = computed(() => { return statusPremium === true });
 
         <div class="dropdown-menu dropdown-menu-md-end p-3" aria-labelledby="profileMenuButton">
             <div class="profile-item">
-                <strong>ID Username</strong>
+                <strong>ID User</strong>
                 <span>{{ authStore.user.id }}</span>
             </div>
             <div class="profile-item">
@@ -32,7 +32,7 @@ const isPremium = computed(() => { return statusPremium === true });
             </div>
             <div class="profile-item">
                 <strong>Jenis Kelamin</strong>
-                <span>{{ authStore.user.jenisKelamin }}</span>
+                <span>{{ authStore.user.jenis_kelamin }}</span>
             </div>
             <div class="profile-item">
                 <strong>Status</strong>

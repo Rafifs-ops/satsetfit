@@ -46,7 +46,7 @@ exports.login = async (req, res) => {
                     username: user.username,
                     email: user.email,
                     isPremium: user.isPremium,
-                    jeniskelamin: user.jenis_kelamin,
+                    jenis_kelamin: user.jenis_kelamin,
                     historyResults: user.historyResults
                 }
             });

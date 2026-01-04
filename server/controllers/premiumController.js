@@ -18,7 +18,10 @@ exports.validatePremExp = async (req, res) => {
                 { _id: user._id }, // Gunakan user._id yang sudah didapat
                 { $set: { isPremium: false, premiumExpiresAt: null } }
             );
+            res.status(200).json({ msg: "Ubah status selesai" });
         }
+
+        res.status(200).json({ msg: "Masa premium masih berlaku" });
     }
     catch (e) {
         console.error("Error validating premium status:", e);

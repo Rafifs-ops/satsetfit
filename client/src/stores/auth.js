@@ -27,13 +27,22 @@ export const useAuthStore = defineStore('auth', {
                 // 2. Parse JSON
                 const data = await response.json();
 
-                // 3. Akses data LANGSUNG (Tanpa .data)
+                // 3. Tampung data
                 this.token = data.token;
                 this.user = data.user;
 
-                // Simpan ke LocalStorage
+                // 4 . Simpan ke LocalStorage
                 localStorage.setItem('token', this.token);
                 localStorage.setItem('user', JSON.stringify(this.user));
+
+                // 5 . validasi masa premium
+                await fetch('http://localhost:8080/api/premium/validate-exp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ data: data.user.id })
+                })
 
                 return true;
 
