@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps, ref, toRefs, computed } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 
 const props = defineProps(["hasilHitung"]); // Menerima data hasil perhitungan dari komponen induk(PremCalc.vue)
 const { hasilHitung } = toRefs(props) // Menjaga reaktivitas data/variabel saat menggunakan destruk
@@ -7,7 +8,8 @@ const { hasilHitung } = toRefs(props) // Menjaga reaktivitas data/variabel saat 
 // Cek apakah perhitungan sudah dilakukan ? output = Boolean
 const hasCalculated = computed(() => hasilHitung.value.tdde > 0 && hasilHitung.value.bmi > 0 && hasilHitung.value.bmr > 0);
 
-const userId = localStorage.getItem("userId");
+const authStore = useAuthStore();
+const userId = authStore.user.id;
 
 const loading = ref(false); // State default untuk loading
 
