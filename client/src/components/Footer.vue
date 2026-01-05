@@ -14,9 +14,9 @@ const quickLinks = ref([
 // Data untuk Social Medias (mudah diubah)
 // 'class' digunakan untuk styling CSS, dan 'letter' adalah placeholder ikon
 const socialMedia = ref([
-    { name: 'FitCal Health', url: '#', class: 'facebook', letter: 'f' },
-    { name: '@Fitcal.Id', url: '#', class: 'instagram', letter: 'i' },
-    { name: 'FitCal Indonesia', url: '#', class: 'youtube', letter: 'y' },
+    { name: 'SatSetFit', url: '#', class: 'facebook', letter: 'f' },
+    { name: '@SatSetFit.Id', url: '#', class: 'instagram', letter: 'i' },
+    { name: 'SatSetFit Indonesia', url: '#', class: 'youtube', letter: 'y' },
 ]);
 </script>
 
@@ -27,8 +27,8 @@ const socialMedia = ref([
 
             <div class="footer-column logo-section">
                 <div class="logo">
-                    <img src="../assets/img/logo-fitcal.png" alt="FitCal Logo" class="logo-img">
-                    <span class="logo-text">FitCal.Co</span>
+                    <img src="../assets/img/logo-satsetfit.png" alt="FitCal Logo" class="logo-img">
+                    <span class="logo-text">SatSetFit</span>
                 </div>
                 <p class="slogan">"One Platform For All Your Wellness Needs."</p>
             </div>
@@ -151,8 +151,6 @@ const socialMedia = ref([
 .logo-img {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
     /* Latar belakang placeholder */
     object-fit: cover;
 }

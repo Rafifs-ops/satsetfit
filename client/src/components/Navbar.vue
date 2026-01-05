@@ -20,7 +20,7 @@ function logout() {
     <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #9EC8B9DB;">
         <div class="container-fluid">
             <!--Logo-->
-            <RouterLink class="navbar-brand" to="/"><img src="../assets/img/logo-fitcal.png" alt="" width="50"
+            <RouterLink class="navbar-brand" to="/"><img src="../assets/img/logo-satsetfit.png" alt="" width="50"
                     height="auto"></RouterLink>
 
             <!--Tbl Menu untuk responsive-->
