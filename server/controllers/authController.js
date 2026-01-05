@@ -62,14 +62,14 @@ exports.getMe = async (req, res) => {
     const { id } = req.body;
 
     try {
-        const res = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
+        const userFound = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
         const user = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            isPremium: user.isPremium,
-            jenis_kelamin: user.jenis_kelamin,
-            historyResults: user.historyResults
+            id: userFound.id,
+            username: userFound.username,
+            email: userFound.email,
+            isPremium: userFound.isPremium,
+            jenis_kelamin: userFound.jenis_kelamin,
+            historyResults: userFound.historyResults
         }
         res.json(user);
     } catch (err) {

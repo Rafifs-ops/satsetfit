@@ -71,7 +71,8 @@ export const useAuthStore = defineStore('auth', {
                 const response = await fetch('http://localhost:8080/api/auth/me', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.token}`
                     },
                     body: JSON.stringify({ id: this.user.id })
                 });

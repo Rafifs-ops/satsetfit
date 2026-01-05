@@ -49,7 +49,7 @@ function timestamp(url) {
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen ref="resultSection"></iframe>
                 </div>
 
-                <hr class="my-4" style="color: var(--color-medium);">
+                <hr class="my-4" style="color: #5C8374;">
 
                 <h2 class="mb-4 section-title">Top 10 Latihan:</h2>
                 <div class="row g-4">
@@ -106,35 +106,28 @@ function timestamp(url) {
 </template>
 
 <style scoped>
-/* Mendefinisikan Variabel Warna dari Palet Anda */
-:root {
-    --color-light: #9EC8B9;
-    --color-medium: #5C8374;
-    --color-dark: #1B4242;
-    --color-darkest: #092635;
-    --color-bg: #f8f9fa;
-    /* Latar belakang netral yang sangat terang */
-}
-
 /* Menerapkan palet ke templat */
 .exercise-template {
-    background-color: var(--color-bg);
-    color: var(--color-darkest);
+    background-color: #f8f9fa;
+    /* var(--color-bg) */
+    color: #092635;
+    /* var(--color-darkest) */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .main-title,
 .section-title {
-    color: var(--color-dark);
+    color: #1B4242;
+    /* var(--color-dark) */
 }
 
 .intro-text {
     color: #343a40;
-    /* Sedikit lebih gelap dari teks biasa agar menonjol */
 }
 
 .video-link {
-    color: var(--color-medium);
+    color: #5C8374;
+    /* var(--color-medium) */
     text-decoration: none;
     font-weight: 500;
     border: none;
@@ -142,18 +135,21 @@ function timestamp(url) {
 }
 
 .video-link:hover {
-    color: var(--color-dark);
+    color: #1B4242;
+    /* var(--color-dark) */
     text-decoration: underline;
 }
 
 /* Kustomisasi Video Embed */
 .video-embed {
-    border: 1px solid var(--color-light);
+    border: 1px solid #9EC8B9;
+    /* var(--color-light) */
 }
 
 /* Kustomisasi Kartu Latihan */
 .exercise-card {
-    border: 1px solid var(--color-light);
+    border: 1px solid #9EC8B9;
+    /* var(--color-light) */
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
@@ -163,7 +159,8 @@ function timestamp(url) {
 }
 
 .exercise-card .card-title {
-    color: var(--color-dark);
+    color: #1B4242;
+    /* var(--color-dark) */
 }
 
 .exercise-card .card-body {
@@ -172,20 +169,26 @@ function timestamp(url) {
 
 /* Kotak Kesimpulan */
 .conclusion-box {
-    background-color: var(--color-light);
-    color: var(--color-darkest);
-    border: 1px solid var(--color-medium);
+    background-color: #9EC8B9;
+    /* var(--color-light) */
+    color: #092635;
+    /* var(--color-darkest) */
+    border: 1px solid #5C8374;
+    /* var(--color-medium) */
 }
 
 .conclusion-box .video-link {
-    color: var(--color-dark);
+    color: #1B4242;
+    /* var(--color-dark) */
     font-weight: bold;
 }
 
 /* Tombol CTA (Call to Action) */
 .watch-video-btn {
-    background-color: var(--color-medium);
-    border-color: var(--color-medium);
+    background-color: #5C8374;
+    /* var(--color-medium) */
+    border-color: #5C8374;
+    /* var(--color-medium) */
     color: black;
     padding: 12px 24px;
     font-weight: 600;
