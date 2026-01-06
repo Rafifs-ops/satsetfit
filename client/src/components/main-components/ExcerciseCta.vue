@@ -55,7 +55,7 @@
 
 <style scoped>
 .features-section {
-    background-color: #0a2a3a;
+    background-color: #1C1678;
     /* Latar belakang biru tua */
     color: #333;
     padding: 6rem 0;
@@ -64,7 +64,7 @@
 
 /* --- Bagian Judul --- */
 .features-title-box {
-    background-color: #8BC34A;
+    background-color: #7BC9FF;
     /* Hijau muda */
     padding: 1rem 3.5rem;
     border-radius: 50px;
@@ -105,7 +105,7 @@
 
 /* --- Kartu Teks (Kiri) --- */
 .feature-text-card {
-    background-color: #e0f7fa;
+    background-color: #7BC9FF;
     /* Biru mint sangat muda */
     border-radius: 40px;
     /* Sangat rounded */
@@ -124,7 +124,7 @@
 
 /* Tombol Get Started */
 .btn.btn-get-started {
-    background-color: #9CCC65;
+    background-color: #A3FFD6;
     /* Hijau muda/abu-abu */
     color: #0a2a3a;
     border: none;
@@ -142,7 +142,7 @@
 
 /* --- Wrapper Gambar (Kanan) --- */
 .feature-image-wrapper {
-    background-color: #4b6b5a;
+    background-color: #8576FF;
     /* Hijau tua */
     border-radius: 30px;
     transition: transform 0.3s ease;
@@ -153,7 +153,7 @@
 }
 
 .feature-image-inner {
-    background-color: #81c784;
+    background-color: #7BC9FF;
     /* Hijau lebih muda */
     border-radius: 25px;
 }

@@ -33,7 +33,7 @@
 <style scoped>
 /* CSS untuk bagian hero */
 .hero-section {
-    background-color: #0a2a3a;
+    background-color: #1C1678;
     color: #ffffff;
     padding: 6rem 0;
     min-height: 90vh;
@@ -76,7 +76,7 @@
 
 /* Kustomisasi Tombol */
 .btn.btn-custom-mint {
-    background-color: #b0d3bf;
+    background-color: #A3FFD6;
     /* Warna mint */
     color: #0a2a3a;
     /* Teks gelap agar kontras */

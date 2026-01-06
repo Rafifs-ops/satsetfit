@@ -106,28 +106,23 @@ function timestamp(url) {
 </template>
 
 <style scoped>
-/* Menerapkan palet ke templat */
 .exercise-template {
-    background-color: #f8f9fa;
-    /* var(--color-bg) */
-    color: #092635;
-    /* var(--color-darkest) */
+    background-color: #1C1678;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .main-title,
 .section-title {
-    color: #1B4242;
+    color: #7BC9FF;
     /* var(--color-dark) */
 }
 
 .intro-text {
-    color: #343a40;
+    color: #7BC9FF;
 }
 
 .video-link {
-    color: #5C8374;
-    /* var(--color-medium) */
+    color: #7BC9FF;
     text-decoration: none;
     font-weight: 500;
     border: none;
@@ -140,16 +135,8 @@ function timestamp(url) {
     text-decoration: underline;
 }
 
-/* Kustomisasi Video Embed */
-.video-embed {
-    border: 1px solid #9EC8B9;
-    /* var(--color-light) */
-}
-
 /* Kustomisasi Kartu Latihan */
 .exercise-card {
-    border: 1px solid #9EC8B9;
-    /* var(--color-light) */
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
@@ -159,17 +146,12 @@ function timestamp(url) {
 }
 
 .exercise-card .card-title {
-    color: #1B4242;
-    /* var(--color-dark) */
-}
-
-.exercise-card .card-body {
-    background-color: #ffffff;
+    color: #8576FF;
 }
 
 /* Kotak Kesimpulan */
 .conclusion-box {
-    background-color: #9EC8B9;
+    background-color: #7BC9FF;
     /* var(--color-light) */
     color: #092635;
     /* var(--color-darkest) */
@@ -185,7 +167,7 @@ function timestamp(url) {
 
 /* Tombol CTA (Call to Action) */
 .watch-video-btn {
-    background-color: #5C8374;
+    background-color: #7BC9FF;
     /* var(--color-medium) */
     border-color: #5C8374;
     /* var(--color-medium) */

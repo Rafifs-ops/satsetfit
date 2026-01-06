@@ -154,7 +154,7 @@ const renderMarkdown = (text) => {
 
 <template>
     <main>
-        <button class="btn btn-success btn-lg shadow-sm mb-2" @click="openPremiumModal">
+        <button class="btn btn-lg shadow-sm mb-2" @click="openPremiumModal" style="background-color: #A3FFD6;">
             Chatbot AI <i class="bi bi-robot"></i> </button>
 
         <div v-if="showPremiumModal" class="premium-modal-backdrop" @click.self="closePremiumModal">

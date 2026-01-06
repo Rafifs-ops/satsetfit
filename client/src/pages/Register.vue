@@ -122,7 +122,7 @@ async function register() {
     padding: 1rem;
     /* Reduced padding for small screens */
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(160deg, #092635 0%, #1B4242 50%, #5C8374 100%);
+    background: linear-gradient(160deg, #1C1678 0%, #8576FF 50%, #A3FFD6 100%);
     background-size: cover;
 }
 
@@ -138,7 +138,7 @@ async function register() {
 .glass-card {
     width: 100%;
     max-width: 550px;
-    background: rgba(27, 66, 66, 0.6);
+    background: #1C1678;
     backdrop-filter: blur(15px);
     border-radius: 20px;
     border: 1px solid rgba(92, 131, 116, 0.2);
@@ -215,7 +215,7 @@ async function register() {
 
 /* --- Custom Glow Button --- */
 .btn-glow {
-    background: #5C8374;
+    background: #A3FFD6;
     border: none;
     border-radius: 10px;
     color: #092635;

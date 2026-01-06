@@ -87,7 +87,7 @@ watch(hasilHitung, (newVal) => {
                             <div class="card shadow-lg border-0">
 
                                 <div class="card-header text-center text-white">
-                                    <h1 class="my-2">Kalkulator Kesehatan</h1>
+                                    <h1 class="my-2">Kalkulator Kalori</h1>
                                 </div>
 
                                 <div class="card-body p-4 p-md-5">
@@ -173,7 +173,7 @@ watch(hasilHitung, (newVal) => {
 
 <style scoped>
 .calculator-wrapper {
-    background-color: #9EC8B9;
+    background-color: #1C1678;
     /* Light Mint */
     min-height: 100vh;
     /* Menggunakan font sistem modern */
@@ -186,18 +186,19 @@ watch(hasilHitung, (newVal) => {
     /* Sudut lebih bulat */
     overflow: hidden;
     /* Memastikan header mengikuti border-radius */
+    background-color: #7BC9FF;
 }
 
 .card-header {
-    background-color: #092635;
+    background-color: #8576FF;
     /* Dark Navy */
     border-bottom: 0;
 }
 
 .card-header h1 {
-    color: #9EC8B9;
+    color: #A3FFD6;
     /* Light Mint */
-    font-weight: 300;
+    font-weight: bold;
     letter-spacing: 0.5px;
 }
 
@@ -206,7 +207,7 @@ watch(hasilHitung, (newVal) => {
     /* Dark Teal */
     font-weight: 600;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid #9EC8B9;
+    border-bottom: 3px solid #A3FFD6;
     /* Light Mint */
     display: inline-block;
 }

@@ -73,7 +73,7 @@ async function handleLogin() {
   align-items: center;
   min-height: 100vh;
   padding: 2rem;
-  background-color: #092635;
+  background-color: #1C1678;
   /* Diganti dari var(--bg-deep-space) */
   font-family: 'Inter', sans-serif;
   /* Diganti dari var(--font-family) */
@@ -87,14 +87,14 @@ async function handleLogin() {
 .glass-card {
   width: 100%;
   max-width: 450px;
-  background: rgba(27, 66, 66, 0.6);
+  background: #8576FF;
   /* Semi-transparent container */
   backdrop-filter: blur(15px);
   /* The frosted glass effect */
   border-radius: 20px;
   border: 1px solid rgba(92, 131, 116, 0.2);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  color: #9ec8b9;
+  color: #A3FFD6;
   /* Diganti dari var(--text-glow) */
 }
 
@@ -106,14 +106,14 @@ async function handleLogin() {
 .card-title {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #9ec8b9;
+  color: #A3FFD6;
   /* Diganti dari var(--text-glow) */
   text-shadow: 0 0 10px rgba(158, 200, 185, 0.5);
 }
 
 .card-subtitle {
   font-size: 1rem;
-  color: #9ec8b9;
+  color: #A3FFD6;
   /* Diganti dari var(--text-glow) */
   opacity: 0.7;
 }
@@ -130,7 +130,7 @@ async function handleLogin() {
   border: 1px solid #5c8374;
   /* Diganti dari var(--accent-teal) */
   border-radius: 10px;
-  color: #9ec8b9;
+  color: #A3FFD6;
   /* Diganti dari var(--text-glow) */
   padding: 0.85rem 1rem;
   transition: all 0.3s ease;
@@ -143,7 +143,7 @@ async function handleLogin() {
 /* --- Input Focus Effect (The Glow) --- */
 .form-control:focus {
   background-color: rgba(9, 38, 53, 0.7);
-  color: #9ec8b9;
+  color: #A3FFD6;
   /* Diganti dari var(--text-glow) */
   border-color: #9ec8b9;
   /* Diganti dari var(--text-glow) */
@@ -153,7 +153,7 @@ async function handleLogin() {
 
 /* --- Custom Glow Button --- */
 .btn-glow {
-  background: #5c8374;
+  background: #A3FFD6;
   /* Diganti dari var(--accent-teal) */
   border: none;
   border-radius: 10px;
@@ -185,7 +185,7 @@ async function handleLogin() {
 }
 
 .form-footer a {
-  color: #9ec8b9;
+  color: #A3FFD6;
   /* Diganti dari var(--text-glow) */
   font-weight: 600;
   text-decoration: none;

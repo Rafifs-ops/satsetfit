@@ -91,7 +91,7 @@ const formatRupiah = (number) => {
 <style scoped>
 /* Wrapper utama halaman dengan background warna paling terang */
 .product-page-wrapper {
-    background-color: #9EC8B9;
+    background-color: #1C1678;
     min-height: 100vh;
     /* Memastikan background memenuhi layar */
     width: 100%;
@@ -99,7 +99,7 @@ const formatRupiah = (number) => {
 
 /* Judul utama halaman */
 .section-title {
-    color: #092635;
+    color: #7BC9FF;
     /* Dark Navy */
     font-weight: 700;
 }
@@ -137,10 +137,9 @@ const formatRupiah = (number) => {
 
 /* Tombol kustom */
 .btn-custom {
-    background-color: #1B4242;
+    background-color: #A3FFD6;
     /* Dark Green */
     border-color: #1B4242;
-    color: #FFFFFF;
     /* Teks putih agar kontras */
     font-weight: 500;
     padding: 0.6rem 1rem;

@@ -53,7 +53,7 @@
 <style scoped>
 
 .about-section {
-    background-color: #0d1b2a;
+    background-color: #1C1678;
     color: #e0f2f7;
     min-height: 100vh;
     display: flex;
@@ -193,7 +193,7 @@
 
 /* Kustomisasi Tombol */
 .btn.btn-custom-mint {
-    background-color: #b0d3bf;
+    background-color: #A3FFD6;
     /* Warna mint */
     color: #0a2a3a;
     /* Teks gelap agar kontras */

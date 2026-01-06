@@ -17,7 +17,7 @@ function logout() {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #9EC8B9DB;">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #1C1678;">
         <div class="container-fluid">
             <!--Logo-->
             <RouterLink class="navbar-brand" to="/"><img src="../assets/img/logo-satsetfit.png" alt="" width="50"
@@ -49,8 +49,8 @@ function logout() {
                                     class="bi bi-arrow-right-circle"></i></RouterLink>
                         </div>
                         <div v-else>
-                            <RouterLink class="btn text-light fw-bold rounded-5"
-                                style="background-color: #1B4242;" to="/login">Login <i
+                            <RouterLink class="btn fw-bold rounded-5"
+                                style="background-color: #A3FFD6;" to="/login">Login <i
                                     class="bi bi-arrow-right-circle"></i>
                             </RouterLink>
                         </div>
@@ -67,8 +67,8 @@ function logout() {
                             class="bi bi-arrow-right-circle"></i></RouterLink>
                 </div>
                 <div v-else>
-                    <RouterLink class="btn text-light fw-bold rounded-5"
-                        style="background-color: #1B4242;" to="/login">Login <i class="bi bi-arrow-right-circle"></i>
+                    <RouterLink class="btn fw-bold rounded-5"
+                        style="background-color: #A3FFD6;" to="/login">Login <i class="bi bi-arrow-right-circle"></i>
                     </RouterLink>
                 </div>
             </div>
@@ -78,7 +78,7 @@ function logout() {
 
 <style scoped>
 a.nav-link {
-    color: aliceblue;
+    color: #7BC9FF;
 }
 
 .active-link {

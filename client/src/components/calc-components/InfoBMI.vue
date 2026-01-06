@@ -36,7 +36,7 @@
     /* Dark Teal */
     font-weight: 600;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid #9EC8B9;
+    border-bottom: 3px solid #A3FFD6;
     /* Light Mint */
     display: inline-block;
 }

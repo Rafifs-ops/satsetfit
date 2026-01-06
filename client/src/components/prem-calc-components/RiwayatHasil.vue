@@ -22,7 +22,7 @@ const savedResults = computed(() => { // Mendapatkan array historyResults dari d
 
 <template>
     <main>
-        <button class="btn btn-success btn-lg shadow-sm mb-2" @click="openPremiumModal">
+        <button class="btn btn-lg shadow-sm mb-2" @click="openPremiumModal" style="background-color: #A3FFD6;">
             History <i class="bi bi-clock-history"></i>
         </button>
 

@@ -36,14 +36,14 @@ onMounted(async () => {
 <style scoped>
 .article-section {
     /* Warna latar belakang mint muda seperti di referensi */
-    background-color: #f0f7f6;
+    background-color: #1C1678;
 }
 
 .section-title {
     /* Judul dengan style box tumpul seperti di referensi */
     display: inline-block;
     padding: 0.75rem 1.75rem;
-    background-color: #cce3de;
+    background-color: #7BC9FF;
     /* Warna hijau mint */
     border-radius: 50px;
     /* Sudut sangat tumpul */
@@ -62,6 +62,7 @@ onMounted(async () => {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
     /* Memastikan gambar mengikuti border-radius */
+    background-color: #7BC9FF;
 }
 
 .article-card:hover {
@@ -95,7 +96,7 @@ onMounted(async () => {
 
 .btn-primary {
     /* Tombol kustom agar serasi */
-    background-color: #4a9d8c;
+    background-color: #A3FFD6;
     /* Warna hijau yang lebih kuat */
     border-color: #4a9d8c;
     border-radius: 50px;

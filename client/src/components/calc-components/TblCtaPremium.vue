@@ -98,10 +98,10 @@ async function handleUpgrade() {
 <template>
     <main>
         <div class="fixed-button-container">
-            <button class="btn btn-success btn-lg shadow-sm mb-2" @click="openPremiumModal">
+            <button class="btn btn-lg shadow-sm mb-2" @click="openPremiumModal">
                 Simpan Hasil
             </button>
-            <button class="btn btn-success btn-lg shadow-sm" @click="openPremiumModal">
+            <button class="btn btn-lg shadow-sm" @click="openPremiumModal">
                 Chatbot AI <i class="bi bi-robot"></i>
             </button>
         </div>
@@ -140,6 +140,10 @@ async function handleUpgrade() {
     flex-direction: column;
 }
 
+.fixed-button-container * {
+    background-color: #A3FFD6;
+}
+
 .premium-modal-backdrop {
     position: fixed;
     top: 0;
@@ -154,7 +158,7 @@ async function handleUpgrade() {
 }
 
 .premium-modal-content {
-    background-color: #F8F8F8;
+    background-color: #7BC9FF;
     padding: 2.5rem;
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
@@ -189,8 +193,7 @@ async function handleUpgrade() {
 }
 
 .premium-cta-button {
-    background-color: #5C8374;
-    color: white;
+    background-color: #A3FFD6;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;

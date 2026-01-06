@@ -77,12 +77,12 @@ const socialMedia = ref([
 <style scoped>
 /* Container Utama */
 .footer-container {
-    --footer-bg: #223A4A;
+    --footer-bg: #7BC9FF;
     /* Biru tua/teal */
     --footer-green: #9DCA83;
     /* Hijau muda */
-    --text-primary: #FFFFFF;
-    --text-secondary: #E0E0E0;
+    --text-primary: #1C1678;
+    --text-secondary: #1C1678;
     /* Putih pudar/abu-abu muda */
     --text-dark: #333333;
     /* Teks gelap untuk tombol hijau */
@@ -96,12 +96,6 @@ const socialMedia = ref([
 /* Bagian Utama (Grid 4 Kolom) */
 .footer-main {
     display: grid;
-    /* Grid yang sangat responsif:
-    - auto-fit: Buat kolom sebanyak mungkin.
-    - minmax(250px, 1fr): Setiap kolom minimal 250px, dan
-      jika ada sisa ruang, bagi rata (1fr).
-    Ini akan otomatis berubah dari 4, ke 3, 2, lalu 1 kolom.
-  */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
 }
@@ -149,8 +143,8 @@ const socialMedia = ref([
 }
 
 .logo-img {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     /* Latar belakang placeholder */
     object-fit: cover;
 }
