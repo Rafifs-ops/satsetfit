@@ -56,13 +56,11 @@
 /* --- 1. Tata Letak Kartu Utama --- */
 .gizi-section {
     /* MODIFIKASI: Menggunakan gradasi dark teal */
-    background-image: linear-gradient(135deg, #1b4242, #102a2a);
+    background-image: linear-gradient(135deg, #1C1678, #8576FF);
     color: #e0e0e0;
     /* MODIFIKASI: Warna teks default jadi terang */
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    /* Shadow disesuaikan */
-    border-top: 6px solid #5c8374;
     padding: 3rem;
     line-height: 1.6;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;

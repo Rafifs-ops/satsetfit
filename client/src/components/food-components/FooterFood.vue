@@ -9,7 +9,7 @@
 
 <style scoped>
 .footer-section {
-    background-color: #092635;
-    color: #5c8374;
+    background-color: #1C1678;
+    color: #A3FFD6;
 }
 </style>

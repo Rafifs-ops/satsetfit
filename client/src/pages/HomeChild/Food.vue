@@ -33,19 +33,8 @@ const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, outp
 </template>
 
 <style scoped>
-:root {
-    --color-light-mint: #9ec8b9;
-    --color-muted-green: #5c8374;
-    --color-dark-teal: #1b4242;
-    --color-dark-blue: #092635;
-    --color-text-light: #f8f9fa;
-}
-
 .gizi-page-wrapper {
-    background-color: #f9fbfb;
-    /* Latar belakang yang sangat terang */
-    color: var(--color-dark-blue);
-    /* Menggunakan font sistem Bootstrap untuk konsistensi */
+    background-color: #7BC9FF;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, sans-serif;
 }

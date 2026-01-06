@@ -45,7 +45,7 @@ const pesanGizi = ref([
 <style scoped>
 .gizi-section {
     /* MENGGUNAKAN: #1b4242 (dark-teal), #092635 (dark-blue) */
-    background: linear-gradient(135deg, #1b4242 0%, #092635 100%);
+    background: linear-gradient(135deg, #1C1678 0%, #8576FF 100%);
     border-radius: 18px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     border-top: none;
@@ -70,14 +70,6 @@ const pesanGizi = ref([
     border-radius: 20px;
     filter: blur(8px);
     opacity: 0.6;
-}
-
-.gizi-section:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    /* PENINGKATAN: Optimasi transisi hover */
-    will-change: transform, box-shadow;
 }
 
 .gradient-text {

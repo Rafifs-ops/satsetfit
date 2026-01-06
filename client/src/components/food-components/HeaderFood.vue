@@ -11,7 +11,7 @@
 
 <style scoped>
 .hero-section {
-    background-color: #1b4242;
+    background-color: #1C1678;
     color: #f8f9fa;
 }
 

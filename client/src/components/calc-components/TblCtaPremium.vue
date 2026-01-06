@@ -108,8 +108,6 @@ async function handleUpgrade() {
 
         <div v-if="showPremiumModal" class="premium-modal-backdrop" @click.self="closePremiumModal">
             <div class="premium-modal-content">
-                <button type="button" class="btn-close premium-modal-close" aria-label="Close"
-                    @click="closePremiumModal"></button>
                 <div class="premium-modal-body text-center">
                     <i class="bi bi-star-fill premium-icon"></i>
                     <h4 class="premium-text mt-3">Akses Premium</h4>
@@ -130,7 +128,6 @@ async function handleUpgrade() {
 </template>
 
 <style scoped>
-/* CSS Anda yang sudah ada tetap di sini */
 .fixed-button-container {
     position: fixed;
     bottom: 2rem;
@@ -140,7 +137,7 @@ async function handleUpgrade() {
     flex-direction: column;
 }
 
-.fixed-button-container * {
+.fixed-button-container button {
     background-color: #A3FFD6;
 }
 
@@ -165,16 +162,6 @@ async function handleUpgrade() {
     position: relative;
     max-width: 400px;
     width: 90%;
-}
-
-.premium-modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #1B4242;
 }
 
 .premium-icon {
