@@ -2,11 +2,11 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        token: localStorage.getItem('token') || null,
-        user: JSON.parse(localStorage.getItem('user')) || null,
+        token: localStorage.getItem('token') || null, // Menyimpan token
+        user: JSON.parse(localStorage.getItem('user')) || null, // Menyimpan data user, isi: objek
     }),
     getters: {
-        isAuthenticated: (state) => !!state.token,
+        isAuthenticated: (state) => !!state.token, // Fungsi untuk memeriksa apakah user sudah login atau belum
     },
     actions: {
         async login(username, password) {
@@ -15,25 +15,25 @@ export const useAuthStore = defineStore('auth', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: username, password: password })
-                });
+                }); // Proses auth ke backend
 
                 // 1. Cek status HTTP (Fetch tidak otomatis error jika 400/500)
                 if (!response.ok) {
                     // Ambil pesan error dari backend jika ada
                     const errorData = await response.json();
-                    throw new Error(errorData.msg || 'Login gagal');
+                    console.log(errorData.msg || 'Login gagal');
                 }
 
                 // 2. Parse JSON
-                const data = await response.json();
+                const data = await response.json(); // Mendapatkan data dari backend
 
                 // 3. Tampung data
                 this.token = data.token;
-                this.user = data.user;
+                this.user = data.user; // isi: objek
 
                 // 4 . Simpan ke LocalStorage
                 localStorage.setItem('token', this.token);
-                localStorage.setItem('user', JSON.stringify(this.user));
+                localStorage.setItem('user', JSON.stringify(this.user)); // isi: objek
 
                 return true;
 
@@ -42,15 +42,14 @@ export const useAuthStore = defineStore('auth', {
                 throw error; // Lempar ulang agar bisa ditangkap di Login.vue
             }
         },
-        logout() {
+        logout() { // Menghapus data token dan user di localstorage
             this.token = null
             this.user = null
             localStorage.removeItem('token')
             localStorage.removeItem('user')
         },
-        async checkPremiumStatus() {
-            // Jangan jalankan jika tidak ada user/token
-            if (!this.user || !this.token) return;
+        async checkPremiumStatus() { // Periksa masa premium user apakah sudah kadaluarsa atau belum
+            if (!this.user || !this.token) return; // Jangan jalankan jika tidak ada user/token
 
             try {
                 await fetch('http://localhost:8080/api/premium/validate-exp', {
@@ -64,8 +63,8 @@ export const useAuthStore = defineStore('auth', {
                 console.error("Gagal validasi premium:", error);
             }
         },
-        async refreshUserData() {
-            if (!this.user || !this.token) return;
+        async refreshUserData() { // Mengupdate data user terbaru dari backend
+            if (!this.user || !this.token) return; // Jangan jalankan jika tidak ada user/token
 
             try {
                 const response = await fetch('http://localhost:8080/api/auth/me', {
@@ -79,13 +78,8 @@ export const useAuthStore = defineStore('auth', {
 
                 if (response.ok) {
                     const userData = await response.json();
-
-                    // Update state Pinia
-                    this.user = userData;
-
-                    // Update LocalStorage agar sinkron
-                    localStorage.setItem('user', JSON.stringify(userData));
-
+                    this.user = userData; // Update state Pinia
+                    localStorage.setItem('user', JSON.stringify(userData)); // Update LocalStorage agar sinkron
                     return true;
                 }
             } catch (error) {

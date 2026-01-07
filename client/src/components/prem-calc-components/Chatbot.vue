@@ -1,7 +1,7 @@
 <script setup>
 import { ref, nextTick } from 'vue';
 import { defineProps, toRefs } from 'vue';
-import { marked } from 'marked'; // Tambahkan ini
+import { marked } from 'marked';
 
 // --- MENERIMA DATA HASIL HITUNG KALKUATOR MELALUI PROPS ---
 const props = defineProps({ // Menerima data hasil perhitungan dan input data dari komponen induk
@@ -92,7 +92,7 @@ async function sendMessage() {
                 parts: [{ text: msg.text }] // isi properti parts adalah array(objek)
             })); // Menghasilkan array baru(historyContent) yang awalnya merupakan array message yang telah dimodifikasi sesuai kebutuhan
 
-        // Proses memuat prompt (Membungkus prompt) dengan konfigurasi dari google AI Studio untuk dikirim ke AI
+        // Proses memuat data untuk dikitim ke AI/Backend
         const payload = {
             query: text, // Mengirim chat
             historyContent: historyContent,
@@ -112,13 +112,13 @@ async function sendMessage() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload) // Berisi prompt yang dibuat
+            body: JSON.stringify(payload) // Berisi data yang dibuat
         });
 
         // Jika proses gagal, maka akan melempar pesan error
         if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
-        const result = await response.json(); // Menyimpan respon AI di variabel ini
+        const result = await response.json(); // Menyimpan respon AI di variabel ini, output: objek
 
         // Hapus pesan loading
         messages.value.pop();
@@ -143,6 +143,7 @@ async function sendMessage() {
 }
 // --- AKHIR CHATBOT ---
 
+// --- FUNGSI UNTUK FORMAT RESPON AI ---
 const renderMarkdown = (text) => {
     try {
         return marked.parse(text);
@@ -150,6 +151,7 @@ const renderMarkdown = (text) => {
         return text; // Fallback jika error
     }
 };
+// --- AKHIR FUNGSI UNTUK FORMAT RESPON AI ---
 </script>
 
 <template>

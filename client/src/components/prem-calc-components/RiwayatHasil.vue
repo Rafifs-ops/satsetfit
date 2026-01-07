@@ -12,9 +12,9 @@ function closePremiumModal() {  // Fungsi untuk menutup modal
 }
 // AKHIR KONFIGURASI TAMPILAN UI MODAL
 
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 
-const savedResults = computed(() => { // Mendapatkan array historyResults dari database
+const savedResults = computed(() => { // Mendapatkan array historyResults dari database backend yang disimpan di auth store
     // Gunakan Optional Chaining (?.) agar tidak error jika user.value masih null/undefined
     return authStore.user?.historyResults || false;
 });

@@ -3,10 +3,10 @@ import { useAuthStore } from '@/stores/auth';
 import { onMounted, ref } from 'vue';
 import NotLoginYet from '@/components/NotLoginYet.vue';
 
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
 
-const products = ref([]);
+const products = ref([]); // Variable penampungan data products dari backend
 onMounted(async () => {
   await fetch('http://localhost:8080/api/data/products').then(e => e.json()).then(data => products.value = data);
   // Pada saat DOM diload, maka akan menjalankan fungsi fetch (Mendapatkan data products)

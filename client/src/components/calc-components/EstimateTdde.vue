@@ -10,21 +10,15 @@ const props = defineProps({
     }
 });
 
-// --- Computed Properties ---
 // Menggunakan computed untuk memastikan nilai selalu up-to-date
-// dan membersihkan kode di template.
 // Math.round() digunakan untuk membulatkan kalori ke angka terdekat.
 // parseFloat() untuk mengubah string (dari .toFixed()) kembali menjadi angka.
-
 const tdee = computed(() => Math.round(parseFloat(props.hasilHitung.tdde)));
 
 // Cek apakah perhitungan sudah dilakukan (TDEE > 0)
 const hasCalculated = computed(() => tdee.value > 0);
 
 // --- Target Kalori ---
-// Dihitung berdasarkan TDEE
-// (0.25kg/minggu ≈ 250 kalori/hari, 0.5kg/minggu ≈ 500 kalori/hari, 1kg/minggu ≈ 1000 kalori/hari)
-
 const mildLoss = computed(() => tdee.value - 250);
 const weightLoss = computed(() => tdee.value - 500);
 const extremeLoss = computed(() => tdee.value - 1000);

@@ -9,7 +9,7 @@ import TGS from "@/components/food-components/TGS.vue";
 import FooterFood from "@/components/food-components/FooterFood.vue";
 import NotLoginYet from "@/components/NotLoginYet.vue";
 
-const authStore = useAuthStore();
+const authStore = useAuthStore();// Mendapatkan beberapa variable dan function dari auth store pinia
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean
 </script>
 

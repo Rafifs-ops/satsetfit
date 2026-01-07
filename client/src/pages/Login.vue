@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 
-const authStore = useAuthStore(); // Mengambil fungsi auth
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 const router = useRouter(); // Mengambil fungsi router untuk pindah halaman
 
 // VALIDASI STATUS LOGIN
@@ -18,7 +18,7 @@ const password = ref(''); // Tempat penampungan data password dari form login
 
 async function handleLogin() {
   try {
-    await authStore.login(username.value, password.value);
+    await authStore.login(username.value, password.value); // Memproses authentikasi ke backend
     router.push({ name: "Main" }) // Mengarahkan ke Home page
   } catch (error) {
     alert("Username / password salah... Silahkan ulangi...");

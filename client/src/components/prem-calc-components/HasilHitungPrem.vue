@@ -8,8 +8,8 @@ const { hasilHitung } = toRefs(props) // Menjaga reaktivitas data/variabel saat 
 // Cek apakah perhitungan sudah dilakukan ? output = Boolean
 const hasCalculated = computed(() => hasilHitung.value.tdde > 0 && hasilHitung.value.bmi > 0 && hasilHitung.value.bmr > 0);
 
-const authStore = useAuthStore();
-const userId = authStore.user.id;
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
+const userId = authStore.user.id; // Mengakses id dari data store auth
 
 const loading = ref(false); // State default untuk loading
 
@@ -18,13 +18,13 @@ async function simpanHasil() {
         loading.value = true // Menampilkan tampilan loading
         const newResult = {
             id: userId,
-            bmi: hasilHitung.value.bmi, // Gunakan .value untuk mengakses data dari toRefs
+            bmi: hasilHitung.value.bmi,
             bmr: hasilHitung.value.bmr,
             tdde: hasilHitung.value.tdde,
             date: new Date()
         };
 
-        // Menambahkan objek/nilai baru ke array 'historyResults'
+        // Menambahkan objek/nilai baru ke database array 'historyResults'
         await fetch('http://localhost:8080/api/save/calc-result', {
             method: 'POST',
             headers: {
@@ -32,8 +32,7 @@ async function simpanHasil() {
             },
             body: JSON.stringify(newResult)
         });
-
-        await authStore.refreshUserData();
+        await authStore.refreshUserData(); // Merefresh data user di auth store agar update dengan data terbaru
         alert("Hasil Kalkuator berhasil disimpan....")
     } catch (error) {
         console.error('Error saat menambahkan field: ', error);

@@ -4,7 +4,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const getGeminiResponse = async (prompt) => {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Model Gemini AI
         const result = await model.generateContent(prompt);
         const response = await result.response;
         return response.text();
@@ -13,5 +13,6 @@ const getGeminiResponse = async (prompt) => {
         throw new Error("Gagal mengambil data dari AI");
     }
 };
+// Fungsi ini akan menghasilkan respon dari AI berupa text
 
 module.exports = { getGeminiResponse };

@@ -9,8 +9,10 @@ const snap = new Midtrans.Snap({
 
 exports.payment = async (req, res) => {
     try {
+        // Mendapatkan data yang dikirim dari frontend (client)
         const { username, email } = req.body;
 
+        // Jika user dan email tidak ada, maka hentikan program
         if (!username || !email) {
             return res.status(400).json({ error: "Username and email are required" });
         }

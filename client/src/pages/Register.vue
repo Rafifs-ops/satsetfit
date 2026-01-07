@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter(); // Mendapatkan fungsi router untuk pindah halaman
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 
 // VALIDASI STATUS LOGIN
 const statusLogin = authStore.isAuthenticated; // Mendapatkan data statusLogin
@@ -35,9 +35,9 @@ async function register() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataRegister)
-        });
+        }); // Proses mengirim data ke backend
 
-        const result = await response.json();
+        const result = await response.json(); // Mendapatkan respon backend
 
         if (!response.ok) {
             // Jika backend return error (misal email duplikat)

@@ -2,9 +2,9 @@
 import { computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 
-// Proses pengambilan statusPremium
+// Proses pengambilan statusPremium, output: boolean
 const isPremium = computed(() => authStore.user?.isPremium === true);
 </script>
 

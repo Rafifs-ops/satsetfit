@@ -4,7 +4,7 @@ import { exerciseVideos } from '@/composables/exerciseData';
 import NotLoginYet from '@/components/NotLoginYet.vue';
 import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean
 const resultSection = ref(null); // State untuk setting scroll otomatis
 const videoInfo = ref(exerciseVideos); // Gunakan data yang diimport dari composables

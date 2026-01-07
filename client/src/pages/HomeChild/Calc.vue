@@ -13,11 +13,10 @@ import { useCalculator } from '@/composables/useCalculator';
 import { useAuthStore } from '@/stores/auth';
 
 // Mendapatkan data auth dan status login
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
 
-// Proses pengambilan statusPremium
-const isPremium = computed(() => authStore.user?.isPremium === true);
+const isPremium = computed(() => authStore.user?.isPremium === true); // Proses pengambilan statusPremium
 
 const resultSection = ref(null); // Mendapatkan section untuk target scroll otomatis
 
@@ -47,18 +46,18 @@ function handleSubmitHitung() {
 }
 
 // --- PROSES SAVE HASIL DAN INPUT PERHITUNGAN DI LOCALSTORAGE ---
-
 // 1. LOAD: Saat halaman baru dibuka/refresh, ambil data dari penyimpanan
 onMounted(() => {
-    const savedInput = localStorage.getItem('fitcal_input');
-    const savedHasil = localStorage.getItem('fitcal_hasil');
+    const savedInput = localStorage.getItem('fitcal_input'); // Mendapatkan data input dari localstorage
+    const savedHasil = localStorage.getItem('fitcal_hasil'); // Mendapatkan data hasil dari localstorage
 
     if (savedInput) {
-        // Parse JSON kembali menjadi object
+        // Parse JSON kembali menjadi object dan simpan di variable inputData agar lgsg ditampilkan
         inputData.value = JSON.parse(savedInput);
     }
 
     if (savedHasil) {
+        // Parse JSON kembali menjadi object dan simpan di variable hasilData agar lgsg ditampilkan
         hasilHitung.value = JSON.parse(savedHasil);
     }
 });
@@ -72,7 +71,6 @@ watch(inputData, (newVal) => {
 watch(hasilHitung, (newVal) => {
     localStorage.setItem('fitcal_hasil', JSON.stringify(newVal));
 }, { deep: true });
-
 // --- AKHIR PROSES SAVE HASIL DAN INPUT PERHITUNGAN DI LOCALSTORAGE ---
 </script>
 

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan fungsi dari auth store pinia
 
 // ----- KONFIGURASI UI MODAL -----
 // State untuk mengontrol tampilan modal
@@ -23,7 +23,7 @@ function closePremiumModal() {
 // ----- PAYMENT GATEWAY ----
 // Fungsi untuk menangani proses upgrade
 async function handleUpgrade() {
-    isLoading.value = true;
+    isLoading.value = true; // Mengaktifkan loading
     try {
         // 1. Panggil backend untuk membuat transaksi
         const response = await fetch('http://localhost:8080/api/create-transaction/payment', {
@@ -37,12 +37,10 @@ async function handleUpgrade() {
             })
         });
 
-        if (!response.ok) {
-            throw new Error('Gagal membuat transaksi');
-        }
+        if (!response.ok) {throw new Error('Gagal membuat transaksi');} // jika fetch gagal, makan akan melempar error
 
-        const transactionData = await response.json();
-        const transactionToken = transactionData.token;
+        const transactionData = await response.json(); // Mendapatkan respon dari backend + konversi json -> kode js, output: objek
+        const transactionToken = transactionData.token; // Mengakses nilai dari properti objek token (key)
 
         // 2. Panggil Midtrans Snap
         window.snap.pay(transactionToken, {
@@ -52,8 +50,7 @@ async function handleUpgrade() {
                 alert('Pembayaran berhasil! Akun Anda telah di-upgrade.');
 
                 // 3. Update status user di database
-                const id = authStore.user.id;
-
+                const id = authStore.user.id; // Mendapatkan id dari auth store pinia
                 await fetch('http://localhost:8080/api/premium/upgrade-prem', {
                     method: 'POST',
                     headers: {
@@ -61,10 +58,9 @@ async function handleUpgrade() {
                     },
                     body: JSON.stringify({id: id})
                 });
-
-                await authStore.refreshUserData();
-                isLoading.value = false;
-                closePremiumModal();
+                await authStore.refreshUserData(); // Menjalankan fungsi refresh data user agar data user update
+                isLoading.value = false; // Menonaktifkan loading
+                closePremiumModal(); // Menutup tampilan modal
                 window.location.reload(); // Muat ulang halaman untuk refresh status premium
             },
             onPending: (result) => {

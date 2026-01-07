@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 
 exports.validatePremExp = async (req, res) => {
     try {
-        const { id } = req.body;
+        const { id } = req.body; // Mendapatkan data yang dikirim dari frontend (client)
         const now = new Date();
 
-        // 2. Gunakan mongoose.Types.ObjectId dan await
+        // Mencari user di database dengan id
         const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
 
-        if (!user) return; // Handle jika user tidak ada
+        if (!user) return; // jika user tidak ada, hentikan program
 
         const expiryDate = user.premiumExpiresAt;
 
-        if (expiryDate && now > expiryDate) { // Cek expiryDate ada isinya atau null
+        if (expiryDate && now > expiryDate) { // Jika masa premium user sudah melewati masa kadaluarsanya
             await User.updateOne(
                 { _id: user._id }, // Gunakan user._id yang sudah didapat
-                { $set: { isPremium: false, premiumExpiresAt: null } }
+                { $set: { isPremium: false, premiumExpiresAt: null } } // Merubah status premium user menjadi false (nonaktif)
             );
             res.status(200).json({ msg: "Ubah status selesai" });
         }
@@ -29,16 +29,15 @@ exports.validatePremExp = async (req, res) => {
 }
 
 exports.upgradePrem = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.body; // Mendapatkan data yang dikirim dari frontend (client)
     const now = new Date();
     const expiryDate = new Date(now.setDate(now.getDate() + 30));
 
-    // 3. Gunakan mongoose.Types.ObjectId
     await User.updateOne(
         { _id: new mongoose.Types.ObjectId(id) },
         {
             $set: {
-                isPremium: true,
+                isPremium: true, // Merubah status premium user menjadi true (aktif)
                 premiumExpiresAt: expiryDate
             }
         }

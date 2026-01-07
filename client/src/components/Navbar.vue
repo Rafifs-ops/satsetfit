@@ -3,10 +3,9 @@ import { RouterLink, useRouter } from 'vue-router';
 import Profil from './Profil.vue';
 import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore();
+const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 
 // Mendapatkan status login, output: boolean
-// Menggunakan computed agar nilai bisa berubah secara otomatis ketika ada perubahan
 const statusLogin = authStore.isAuthenticated;
 const router = useRouter() // Mendapatkan fungsi router untuk pindah halaman
 

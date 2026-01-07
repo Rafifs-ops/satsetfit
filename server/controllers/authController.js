@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 exports.register = async (req, res) => {
     try {
+        // Mendapatkan data yang dikirim dari frontend (client)
         const { username, email, password, jenis_kelamin } = req.body;
 
         // Cek user lama
@@ -26,6 +27,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
+        // Mendapatkan data yang dikirim dari frontend (client)
         const { username, password } = req.body;
 
         // Cek user
@@ -57,10 +59,10 @@ exports.login = async (req, res) => {
     }
 };
 
-// Tambahkan fungsi ini untuk mengambil data user terbaru
+// Fungsi untuk mengambil data user terbaru
 exports.getMe = async (req, res) => {
+    // Mendapatkan data yang dikirim dari frontend (client)
     const { id } = req.body;
-
     try {
         const userFound = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
         const user = {
