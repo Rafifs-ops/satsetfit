@@ -20,7 +20,7 @@ const password = ref(''); // Tempat penampungan data password dari form Register
 
 async function register() {
 
-    const api = 'http://localhost:8080/api/auth/register'
+    const api = `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`
     const dataRegister = {
         username: username.value,
         password: password.value,

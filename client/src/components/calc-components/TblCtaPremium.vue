@@ -26,7 +26,7 @@ async function handleUpgrade() {
     isLoading.value = true; // Mengaktifkan loading
     try {
         // 1. Panggil backend untuk membuat transaksi
-        const response = await fetch('http://localhost:8080/api/create-transaction/payment', {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/create-transaction/payment`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ async function handleUpgrade() {
 
                 // 3. Update status user di database
                 const id = authStore.user.id; // Mendapatkan id dari auth store pinia
-                await fetch('http://localhost:8080/api/premium/upgrade-prem', {
+                await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/premium/upgrade-prem`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

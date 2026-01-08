@@ -18,6 +18,23 @@ const savedResults = computed(() => { // Mendapatkan array historyResults dari d
     // Gunakan Optional Chaining (?.) agar tidak error jika user.value masih null/undefined
     return authStore.user?.historyResults || false;
 });
+
+// --- FUNGSI FORMAT TANGGAL BARU ---
+const formatDate = (dateString) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+
+    // Format: "Senin, 1 Januari 2024 pukul 10.30"
+    return new Intl.DateTimeFormat('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short' // Opsional: Hapus baris ini jika tidak ingin menampilkan WIB/WITA/WIT
+    }).format(date);
+};
 </script>
 
 <template>
@@ -34,19 +51,19 @@ const savedResults = computed(() => { // Mendapatkan array historyResults dari d
                 <div class="history-modal-body">
                     <h4 class="modal-title mb-4">Riwayat Hasil Kalkulator</h4>
 
-                    <div v-if="savedResults" class="results-list-container">
+                    <div v-if="savedResults.length == 0">
+                        <p class="text-center text-muted mt-3">Belum ada hasil yang disimpan.</p>
+                    </div>
+
+                    <div v-else class="results-list-container">
                         <div v-for="result in savedResults" :key="result.id" class="result-card">
-                            <div class="result-date">{{ result.date }}</div>
+                            <div class="result-date">{{ formatDate(result.date) }}</div>
                             <div class="result-stats">
                                 <span><strong>BMI:</strong> {{ result.hasilBmi }}</span>
                                 <span><strong>BMR:</strong> {{ result.hasilBmr }} kkal</span>
                                 <span><strong>TDEE:</strong> {{ result.hasilTdde }} kkal</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div v-else>
-                        <p class="text-center text-muted mt-3">Belum ada hasil yang disimpan.</p>
                     </div>
 
                 </div>

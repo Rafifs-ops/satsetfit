@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async login(username, password) {
             try {
-                const response = await fetch('http://localhost:8080/api/auth/login', {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: username, password: password })
@@ -47,18 +47,27 @@ export const useAuthStore = defineStore('auth', {
             this.user = null
             localStorage.removeItem('token')
             localStorage.removeItem('user')
+            localStorage.removeItem('fitcal_input')
+            localStorage.removeItem('fitcal_hasil')
         },
         async checkPremiumStatus() { // Periksa masa premium user apakah sudah kadaluarsa atau belum
             if (!this.user || !this.token) return; // Jangan jalankan jika tidak ada user/token
 
             try {
-                await fetch('http://localhost:8080/api/premium/validate-exp', {
+                await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/premium/validate-exp`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ id: this.user.id })
                 });
+
+                const data = await response.json();
+                // Jika server bilang expired, update data user di frontend
+                if (data.status === 'expired') {
+                    console.log("Premium berakhir, memperbarui data user...");
+                    await this.refreshUserData();
+                }
             } catch (error) {
                 console.error("Gagal validasi premium:", error);
             }
@@ -67,7 +76,7 @@ export const useAuthStore = defineStore('auth', {
             if (!this.user || !this.token) return; // Jangan jalankan jika tidak ada user/token
 
             try {
-                const response = await fetch('http://localhost:8080/api/auth/me', {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/me`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

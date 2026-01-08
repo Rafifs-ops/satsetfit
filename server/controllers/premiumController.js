@@ -9,7 +9,9 @@ exports.validatePremExp = async (req, res) => {
         // Mencari user di database dengan id
         const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
 
-        if (!user) return; // jika user tidak ada, hentikan program
+        if (!user) {
+            return res.status(404).json({ msg: "User tidak ditemukan" });
+        } // jika user tidak ada
 
         const expiryDate = user.premiumExpiresAt;
 
@@ -18,30 +20,42 @@ exports.validatePremExp = async (req, res) => {
                 { _id: user._id }, // Gunakan user._id yang sudah didapat
                 { $set: { isPremium: false, premiumExpiresAt: null } } // Merubah status premium user menjadi false (nonaktif)
             );
-            res.status(200).json({ msg: "Ubah status selesai" });
+            return res.status(200).json({
+                msg: "Masa premium telah berakhir",
+                status: "expired"
+            });
         }
 
-        res.status(200).json({ msg: "Masa premium masih berlaku" });
+        return res.status(200).json({
+            msg: "Masa premium masih berlaku",
+            status: "active"
+        });
     }
     catch (e) {
         console.error("Error validating premium status:", e);
+        return res.status(500).json({ msg: "Server Error" });
     }
 }
 
 exports.upgradePrem = async (req, res) => {
-    const { id } = req.body; // Mendapatkan data yang dikirim dari frontend (client)
-    const now = new Date();
-    const expiryDate = new Date(now.setDate(now.getDate() + 30));
+    try {
+        const { id } = req.body; // Mendapatkan data yang dikirim dari frontend (client)
+        const now = new Date();
+        const expiryDate = new Date(now.setDate(now.getDate() + 30));
 
-    await User.updateOne(
-        { _id: new mongoose.Types.ObjectId(id) },
-        {
-            $set: {
-                isPremium: true, // Merubah status premium user menjadi true (aktif)
-                premiumExpiresAt: expiryDate
+        await User.updateOne(
+            { _id: new mongoose.Types.ObjectId(id) },
+            {
+                $set: {
+                    isPremium: true, // Merubah status premium user menjadi true (aktif)
+                    premiumExpiresAt: expiryDate
+                }
             }
-        }
-    );
-    // Tambahkan res.json() agar client tahu proses selesai
-    res.status(200).json({ msg: "Upgrade success" });
+        );
+        // Tambahkan res.json() agar client tahu proses selesai
+        res.status(200).json({ msg: "Upgrade success" });
+    } catch (error) {
+        console.error("Upgrade error:", error);
+        res.status(500).json({ msg: "Server Error saat upgrade premium" });
+    }
 }

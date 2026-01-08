@@ -81,7 +81,7 @@ async function sendMessage() {
     // 4. Proses mengirim pesan ke gemini
     try {
         // Kofigurasi API
-        const apiUrl = `http://localhost:8080/api/ai/chatbot`;
+        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/ai/chatbot`;
 
         // --- Siapkan History Chat (Seluruh isi chat AI dengan user) ---
         // isi historyContent adalah array(objek)
@@ -165,8 +165,8 @@ const renderMarkdown = (text) => {
                     @click="closePremiumModal"></button>
 
                 <div class="chat-modal-body">
-                    <h4 class="modal-title">Fitcal Chatbot AI</h4>
-                    <i class="text-center mb-2">Model : Gemini 2.5 Pro</i>
+                    <h4 class="modal-title">SatSetFit Chatbot AI</h4>
+                    <i class="text-center mb-2">Model : Gemini 2.5 Flash</i>
 
                     <div class="chat-window" ref="chatWindow">
                         <div v-for="message in messages" :key="message.id"

@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 const articles = ref([]); // Variable penampungan data artikel
 onMounted(async () => {
     // Proses mendapatkan data artikel dari backend dan menyimpan data nya ke variable articles
-    await fetch('http://localhost:8080/api/data/articles').then(e => e.json()).then(data => articles.value = data); // Mendapatkan data
+    await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/data/articles`).then(e => e.json()).then(data => articles.value = data); // Mendapatkan data
 })
 </script>
 
