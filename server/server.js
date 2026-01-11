@@ -8,7 +8,7 @@ const port = 8080; // Port untuk server
 
 // --- Middleware ---
 const corsOptions = {
-    origin: ['http://localhost:5173', 'https://fitcal-indonesia.web.app']
+    origin: ['http://localhost:5173', 'https://satsetfit.netlify.app']
 };
 app.use(cors(corsOptions));
 app.use(express.json()); // Mem-parsing body JSON
