@@ -8,7 +8,7 @@ const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, outp
 
 const products = ref([]); // Variable penampungan data products dari backend
 onMounted(async () => {
-  await fetch('http://localhost:8080/api/data/products').then(e => e.json()).then(data => products.value = data);
+  await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/data/products`).then(e => e.json()).then(data => products.value = data);
   // Pada saat DOM diload, maka akan menjalankan fungsi fetch (Mendapatkan data products)
 })
 
