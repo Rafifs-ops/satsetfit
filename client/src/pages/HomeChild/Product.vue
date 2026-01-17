@@ -5,11 +5,20 @@ import NotLoginYet from '@/components/NotLoginYet.vue';
 
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
 const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
+const isLoading = ref(true); // State untuk status loading
 
 const products = ref([]); // Variable penampungan data products dari backend
 onMounted(async () => {
-  await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/data/products`).then(e => e.json()).then(data => products.value = data);
-  // Pada saat DOM diload, maka akan menjalankan fungsi fetch (Mendapatkan data products)
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/data/products`);
+        const data = await response.json();
+        products.value = data;
+    } catch (error) {
+        console.error("Gagal mengambil data produk:", error);
+    } finally {
+        isLoading.value = false; // Stop loading setelah selesai (sukses/gagal)
+    }
+    // Pada saat DOM diload, maka akan menjalankan fungsi fetch (Mendapatkan data products)
 })
 
 // Fungsi ini akan otomatis menambahkan "Rp" dan memformat angkanya
@@ -33,7 +42,12 @@ const formatRupiah = (number) => {
                     </div>
                 </div>
 
-                <div class="row g-4 d-flex justify-content-center flex-wrap">
+                <div v-if="isLoading" class="loading-container text-center">
+                    <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;"></div>
+                    <p class="mt-3 text-white fw-bold">Loading...</p>
+                </div>
+
+                <div v-else class="row g-4 d-flex justify-content-center flex-wrap">
 
                     <div v-for="product in products" :key="product._id" class="col-12 col-md-6 col-lg-4">
                         <div class="card h-100 border-0 shadow-sm product-card">
@@ -117,6 +131,10 @@ const formatRupiah = (number) => {
     transform: translateY(-5px);
     /* Efek mengangkat saat di-hover */
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.loading-container {
+    padding: 5rem 0;
 }
 
 /* Judul produk di dalam kartu */

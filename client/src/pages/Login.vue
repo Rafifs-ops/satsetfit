@@ -15,13 +15,17 @@ if (statusLogin) { // Jika status login bernilai true
 
 const username = ref(''); // Tempat penampungan data username dari form login
 const password = ref(''); // Tempat penampungan data password dari form login
+const isLoading = ref(false); // State untuk loading
 
 async function handleLogin() {
   try {
+    isLoading.value = true // Mengaktifkan tampilan loading
     await authStore.login(username.value, password.value); // Memproses authentikasi ke backend
     router.push({ name: "Main" }) // Mengarahkan ke Home page
   } catch (error) {
     alert("Username / password salah... Silahkan ulangi...");
+  } finally {
+    isLoading.value = false; // Menonaktifkan tampilan loading
   }
 }
 </script>
@@ -48,7 +52,10 @@ async function handleLogin() {
               placeholder="Enter your password" required />
           </div>
 
-          <button type="submit" class="btn btn-glow w-100">Login</button>
+          <button v-if="isLoading" type="disabled" class="btn btn-glow w-100">
+            <div class="spinner-border text-success" role="status"></div>
+          </button>
+          <button v-else type="submit" class="btn btn-glow w-100">Login</button>
 
           <div class="form-footer text-center mt-4">
             <p>

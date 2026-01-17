@@ -17,6 +17,7 @@ const username = ref(''); // Tempat penampungan data username dari form Register
 const email = ref(''); // Tempat penampungan data email dari form Register
 const jenisKelamin = ref(''); // Tempat penampungan data jenisKelamin dari form Register
 const password = ref(''); // Tempat penampungan data password dari form Register
+const isLoading = ref(false); // State untuk loading
 
 async function register() {
 
@@ -31,6 +32,8 @@ async function register() {
 
     // PROSES MENAMBAHKAN DATA KE DATABASE
     try {
+        isLoading.value = true // Mengaktifkan tampilan loading
+
         const response = await fetch(api, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -51,6 +54,8 @@ async function register() {
     } catch (error) {
         console.error("Error:", error);
         alert("Terjadi kesalahan jaringan");
+    } finally {
+        isLoading.value = false; // Menonaktifkan tampilan loading
     }
     // AKHIR PROSES MENAMBAHKAN DATA KE DATABASE
 }
@@ -95,7 +100,10 @@ async function register() {
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-glow w-100">Register</button>
+                    <button v-if="isLoading" type="disabled" class="btn btn-glow w-100">
+                        <div class="spinner-border text-success" role="status"></div>
+                    </button>
+                    <button v-else type="submit" class="btn btn-glow w-100">Register</button>
 
                     <div class="form-footer text-center mt-4">
                         <p>

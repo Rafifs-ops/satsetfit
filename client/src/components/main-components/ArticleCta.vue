@@ -1,10 +1,19 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
+const isLoading = ref(true); // Variable state untuk loading, default true
 const articles = ref([]); // Variable penampungan data artikel
 onMounted(async () => {
     // Proses mendapatkan data artikel dari backend dan menyimpan data nya ke variable articles
-    await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/data/articles`).then(e => e.json()).then(data => articles.value = data); // Mendapatkan data
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/data/articles`);
+        const data = await response.json();
+        articles.value = data;
+    } catch (error) {
+        console.error("Gagal memuat berita:", error);
+    } finally {
+        isLoading.value = false;
+    }
 })
 </script>
 
@@ -14,7 +23,12 @@ onMounted(async () => {
             <div class="container">
                 <h2 class="text-center mb-5 section-title">Cek Berita untuk Informasi Lebih Lanjut</h2>
 
-                <div class="row g-4">
+                <div v-if="isLoading" class="loading-container text-center">
+                    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;"></div>
+                    <p class="mt-3 text-white fw-bold">Sedang memuat artikel...</p>
+                </div>
+
+                <div v-else class="row g-4">
                     <div v-for="article in articles" :key="article.id"
                         class="col-lg-4 col-md-6 d-flex flex-wrap align-items-stretch">
                         <div class="card h-100 w-100 article-card">
@@ -38,6 +52,7 @@ onMounted(async () => {
 .article-section {
     /* Warna latar belakang mint muda seperti di referensi */
     background-color: #1C1678;
+    min-height: 400px;
 }
 
 .section-title {
@@ -93,6 +108,10 @@ onMounted(async () => {
     font-size: 0.95rem;
     color: #555;
     line-height: 1.6;
+}
+
+.loading-container {
+    padding: 3rem 0;
 }
 
 .btn-primary {
