@@ -208,16 +208,16 @@ const renderMarkdown = (text) => {
 
 .premium-modal-content {
     background-color: #F8F8F8;
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     position: relative;
-    max-width: 500px;
-    width: 90%;
+    max-width: 1100px;
+    width: calc(100% - 32px);
     /* Menambahkan properti ini agar konten chat tidak meluap */
     display: flex;
     flex-direction: column;
-    max-height: 90vh;
+    max-height: 92vh;
 }
 
 .premium-modal-close {
@@ -250,7 +250,7 @@ const renderMarkdown = (text) => {
 .chat-window {
     flex-grow: 1;
     /* Mengisi ruang yang tersedia */
-    max-height: 60vh;
+    max-height: 70vh;
     overflow-y: auto;
     padding: 1rem;
     background-color: #ffffff;

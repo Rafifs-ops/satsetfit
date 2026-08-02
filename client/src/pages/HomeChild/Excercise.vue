@@ -1,11 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { exerciseVideos } from '@/composables/exerciseData';
-import NotLoginYet from '@/components/NotLoginYet.vue';
-import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
-const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean
 const resultSection = ref(null); // State untuk setting scroll otomatis
 const videoInfo = ref(exerciseVideos); // Gunakan data yang diimport dari composables
 
@@ -22,17 +18,13 @@ function timestamp(url) {
 
 <template>
     <main>
-        <div v-if="statusLogin" class="exercise-template">
+        <div class="exercise-template">
             <div class="container py-5">
-
                 <h1 class="display-4 fw-bold mb-3 text-center main-title">
                     TOP 10 Latihan untuk Bugar di Rumah!
                 </h1>
-
                 <p class="lead text-center mb-4 intro-text">
-                    Video ini menyajikan 10 latihan yang dapat Anda lakukan di rumah agar bugar dengan sedikit atau
-                    tanpa
-                    peralatan, sebagian besar mengandalkan perabotan Anda sendiri
+                    Video ini menyajikan 10 latihan yang dapat Anda lakukan di rumah agar bugar dengan sedikit atau tanpa peralatan, sebagian besar mengandalkan perabotan Anda sendiri
                     <button type="button" @click="timestamp(videoInfo.introLink1)" class="video-link fw-medium">
                         [00:06]
                     </button>.
@@ -43,8 +35,7 @@ function timestamp(url) {
                 </p>
 
                 <div class="ratio ratio-16x9 mb-5 shadow-sm rounded overflow-hidden video-embed">
-                    <iframe width="560" height="315" :src="videoInfo.embedUrl" :title="videoInfo.title"
-                        :key="videoInfo.embedUrl" title="YouTube video player" frameborder="0"
+                    <iframe width="560" height="315" :src="videoInfo.embedUrl" title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen ref="resultSection"></iframe>
                 </div>
@@ -97,10 +88,6 @@ function timestamp(url) {
                 </div>
 
             </div>
-        </div>
-
-        <div v-else>
-            <NotLoginYet />
         </div>
     </main>
 </template>

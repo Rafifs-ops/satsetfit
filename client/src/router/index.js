@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import Home from '@/pages/Home.vue'
 import Login from '@/pages/Login.vue'
 import Register from '@/pages/Register.vue'
@@ -7,6 +8,24 @@ import Calc from '@/pages/HomeChild/Calc.vue'
 import Food from '@/pages/HomeChild/Food.vue'
 import Excercise from '@/pages/HomeChild/Excercise.vue'
 import Product from '@/pages/HomeChild/Product.vue'
+
+// Middleware untuk halaman yang membutuhkan login (seperti pages di folder HomeChild)
+const requireAuth = async (to, from, next) => {
+  const authStore = useAuthStore()
+
+  // Jika session belum pernah dicek dari server cookie, lakukan pengecekan sekarang
+  if (!authStore.isSessionChecked) {
+    await authStore.fetchSession()
+    authStore.isSessionChecked = true
+  }
+
+  // Status login langsung dikirim dari server (isLogin: true)
+  if (!authStore.user || !authStore.user.isLogin) {
+    return next({ name: 'Login' })
+  }
+
+  next()
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,7 +36,7 @@ const router = createRouter({
       component: Home,
       children: [
         {
-          path: "", // Default Child Component
+          path: "", // Default Child Component (Public)
           name: "Main",
           component: Main,
         },
@@ -25,21 +44,25 @@ const router = createRouter({
           path: "calc",
           name: "Calc",
           component: Calc,
+          beforeEnter: requireAuth,
         },
         {
           path: "food",
           name: "Food",
           component: Food,
+          beforeEnter: requireAuth,
         },
         {
           path: "excercise",
           name: "Excercise",
           component: Excercise,
+          beforeEnter: requireAuth,
         },
         {
           path: "product",
           name: "Product",
           component: Product,
+          beforeEnter: requireAuth,
         },
       ]
     },

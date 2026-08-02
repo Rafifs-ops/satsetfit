@@ -7,14 +7,12 @@ import FyiRumus from '@/components/calc-components/FyiRumus.vue';
 import TblCtaPremium from '@/components/calc-components/TblCtaPremium.vue';
 import RiwayatHasil from '@/components/prem-calc-components/RiwayatHasil.vue';
 import Chatbot from '@/components/prem-calc-components/Chatbot.vue';
-import NotLoginYet from '@/components/NotLoginYet.vue';
 import { ref, computed, onMounted, watch } from 'vue';
 import { useCalculator } from '@/composables/useCalculator';
 import { useAuthStore } from '@/stores/auth';
 
-// Mendapatkan data auth dan status login
+// Mendapatkan data auth
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
-const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
 
 const isPremium = computed(() => authStore.user?.isPremium === true); // Proses pengambilan statusPremium
 
@@ -76,8 +74,7 @@ watch(hasilHitung, (newVal) => {
 
 <template>
     <main>
-        <div v-if="statusLogin">
-            <div class="calculator-wrapper py-5">
+        <div class="calculator-wrapper py-5">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-10 col-xl-9">
@@ -161,11 +158,6 @@ watch(hasilHitung, (newVal) => {
                     <Chatbot v-if="isPremium" :hasilHitung="hasilHitung" :inputData="inputData" />
                 </div>
             </div>
-        </div>
-
-        <div v-else>
-            <NotLoginYet />
-        </div>
     </main>
 </template>
 

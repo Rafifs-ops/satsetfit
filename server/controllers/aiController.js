@@ -1,4 +1,4 @@
-const { getGeminiResponse } = require('../utils/gemini'); // Mendapatkan fungsi gemini respon dari konfigurasi gemini
+const { getOpenrouterAiResponse } = require('../utils/openrouterAi'); // Mendapatkan fungsi gemini respon dari konfigurasi gemini
 
 exports.chatbot = async (req, res) => {
     // Mendapatkan data yang dikirim dari frontend (client)
@@ -19,12 +19,14 @@ exports.chatbot = async (req, res) => {
   
   User bertanya: "${query}".
   Berikut histori chat Anda dengan User: ${historyContent}
+
+  Jika tidak ada riwayat chat, maka anggap user memulai percakapan baru
   `;
 
     try {
-        const response = await getGeminiResponse(prompt);
+        const response = await getOpenrouterAiResponse(prompt);
         res.json({ result: response }); // Mengirim respon ke frontend (client)
     } catch (error) {
-        res.status(500).json({ error: 'AI Error' });
+        res.status(500).json({ error: 'OpenRouter AI Error' });
     }
 };

@@ -2,15 +2,18 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 8080; // Port untuk server
 
 // --- Middleware ---
 const corsOptions = {
-    origin: ['http://localhost:5173', 'https://satsetfit.netlify.app']
+    origin: ['http://localhost:5173', 'https://satsetfit.netlify.app'],
+    credentials: true
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json()); // Mem-parsing body JSON
 
 // Database Connection

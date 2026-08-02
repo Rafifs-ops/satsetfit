@@ -2,11 +2,12 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        token: localStorage.getItem('token') || null, // Menyimpan token
-        user: JSON.parse(localStorage.getItem('user')) || null, // Menyimpan data user, isi: objek
+        user: JSON.parse(localStorage.getItem('user')) || null, // Menyimpan data(objek) session di state management
+        isSessionChecked: false, // Penanda apakah session dari cookie sudah dicek
     }),
     getters: {
-        isAuthenticated: (state) => !!state.token, // Fungsi untuk memeriksa apakah user sudah login atau belum
+        isAuthenticated: (state) => state.user?.isLogin === true, // Status login langsung dikirim dari server (isLogin: true)
+        isLogin: (state) => state.user?.isLogin === true,
     },
     actions: {
         async login(username, password) {
@@ -14,51 +15,82 @@ export const useAuthStore = defineStore('auth', {
                 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Cookie dari backend (Set-Cookie) otomatis disimpan di browser
                     body: JSON.stringify({ username: username, password: password })
                 }); // Proses auth ke backend
 
-                // 1. Cek status HTTP (Fetch tidak otomatis error jika 400/500)
                 if (!response.ok) {
-                    // Ambil pesan error dari backend jika ada
                     const errorData = await response.json();
-                    console.log(errorData.msg || 'Login gagal');
+                    throw new Error(errorData.msg || 'Login gagal');
                 }
 
-                // 2. Parse JSON
-                const data = await response.json(); // Mendapatkan data dari backend
-
-                // 3. Tampung data
-                this.token = data.token;
-                this.user = data.user; // isi: objek
-
-                // 4 . Simpan ke LocalStorage
-                localStorage.setItem('token', this.token);
-                localStorage.setItem('user', JSON.stringify(this.user)); // isi: objek
+                // 9. Di sisi frontend, ada state management untuk merequest session (cookie otomatis disimpan) dan simpan data(objek) session di state management
+                await this.fetchSession();
+                this.isSessionChecked = true;
 
                 return true;
-
             } catch (error) {
                 console.error("Login gagal:", error.message);
                 throw error; // Lempar ulang agar bisa ditangkap di Login.vue
             }
         },
-        logout() { // Menghapus data token dan user di localstorage
-            this.token = null
-            this.user = null
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
-            localStorage.removeItem('fitcal_input')
-            localStorage.removeItem('fitcal_hasil')
+        async fetchSession() {
+            try {
+                // 5. Client (browser) menggunakan access token di cookie untuk request server untuk validasi token
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/session`, {
+                    method: 'GET',
+                    credentials: 'include' // Cookie otomatis dikirim
+                });
+
+                if (response.ok) {
+                    // 7. Token didecode menjadi data(objek) user dengan tambahan key isLogin(boolean)
+                    // 8. Objek langsung dikirim ke sisi client (frontend)
+                    const data = await response.json();
+                    if (data && data.isLogin) {
+                        // 9. Simpan data(objek) session di state management
+                        this.user = data;
+                        localStorage.setItem('user', JSON.stringify(data));
+                        return data;
+                    }
+                }
+
+                // Jika token tidak valid / belum login
+                this.user = null;
+                localStorage.removeItem('user');
+                return null;
+            } catch (error) {
+                console.error("Gagal merequest session:", error.message);
+                this.user = null;
+                localStorage.removeItem('user');
+                return null;
+            }
+        },
+        async logout() { // Menghapus data session di server dan state/localstorage
+            try {
+                await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+            } catch (error) {
+                console.error("Gagal logout di server:", error);
+            } finally {
+                this.user = null;
+                this.isSessionChecked = false;
+                localStorage.removeItem('user');
+                localStorage.removeItem('fitcal_input');
+                localStorage.removeItem('fitcal_hasil');
+            }
         },
         async checkPremiumStatus() { // Periksa masa premium user apakah sudah kadaluarsa atau belum
-            if (!this.user || !this.token) return; // Jangan jalankan jika tidak ada user/token
+            if (!this.user) return; // Jangan jalankan jika tidak ada user
 
             try {
-                await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/premium/validate-exp`, {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/premium/validate-exp`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ id: this.user.id })
                 });
 
@@ -72,28 +104,9 @@ export const useAuthStore = defineStore('auth', {
                 console.error("Gagal validasi premium:", error);
             }
         },
-        async refreshUserData() { // Mengupdate data user terbaru dari backend
-            if (!this.user || !this.token) return; // Jangan jalankan jika tidak ada user/token
-
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/me`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.token}`
-                    },
-                    body: JSON.stringify({ id: this.user.id })
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    this.user = userData; // Update state Pinia
-                    localStorage.setItem('user', JSON.stringify(userData)); // Update LocalStorage agar sinkron
-                    return true;
-                }
-            } catch (error) {
-                console.error("Gagal refresh data user:", error);
-            }
+        async refreshUserData() { // Mengupdate data user terbaru dari backend via session check
+            if (!this.user) return;
+            return await this.fetchSession();
         }
     }
 })

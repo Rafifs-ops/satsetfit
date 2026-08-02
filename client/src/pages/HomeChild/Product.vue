@@ -1,10 +1,6 @@
 <script setup>
-import { useAuthStore } from '@/stores/auth';
 import { onMounted, ref } from 'vue';
-import NotLoginYet from '@/components/NotLoginYet.vue';
 
-const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
-const statusLogin = authStore.isAuthenticated; // Mendapatkan status login, output: boolean;
 const isLoading = ref(true); // State untuk status loading
 
 const products = ref([]); // Variable penampungan data products dari backend
@@ -33,7 +29,7 @@ const formatRupiah = (number) => {
 
 <template>
     <main>
-        <div v-if="statusLogin" class="product-page-wrapper">
+        <div class="product-page-wrapper">
             <div class="container py-5">
 
                 <div class="row mb-4">
@@ -94,10 +90,6 @@ const formatRupiah = (number) => {
 
                 </div>
             </div>
-        </div>
-
-        <div v-else>
-            <NotLoginYet />
         </div>
     </main>
 </template>
