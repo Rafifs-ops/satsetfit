@@ -2,14 +2,13 @@ const nodemailer = require('nodemailer');
 
 /**
  * Mengirim email berisi kode OTP untuk Verifikasi Email atau Reset Password.
- * Otomatis menampilkan log OTP di server console untuk memudahkan testing dev.
  */
 exports.sendOtpEmail = async ({ to, otp, purpose, username = 'User' }) => {
     const isVerify = purpose === 'VERIFY_EMAIL';
-    const subject = isVerify 
-        ? 'Verifikasi Email Akun SatSetFit Anda' 
+    const subject = isVerify
+        ? 'Verifikasi Email Akun SatSetFit Anda'
         : 'Kode OTP Reset Password SatSetFit';
-    
+
     const title = isVerify ? 'Verifikasi Email Akun' : 'Reset Password Akun';
     const description = isVerify
         ? 'Terima kasih telah mendaftar di <strong>SatSetFit</strong>! Gunakan kode OTP 6 angka berikut untuk memverifikasi alamat email Anda agar dapat login:'
@@ -65,20 +64,11 @@ exports.sendOtpEmail = async ({ to, otp, purpose, username = 'User' }) => {
     </html>
     `;
 
-    // Selalu cetak ke console server untuk kemudahan testing (karena dev sering belum konfigurasi SMTP real)
-    console.log('\n======================================================');
-    console.log(`[SATSETFIT EMAIL DEV LOG] -> Purpose : ${purpose}`);
-    console.log(`[SATSETFIT EMAIL DEV LOG] -> To      : ${to}`);
-    console.log(`[SATSETFIT EMAIL DEV LOG] -> OTP     : ${otp} (Berlaku 5 menit)`);
-    console.log('======================================================\n');
-
-    // Coba kirim via SMTP jika environment variable terkonfigurasi
-    if (process.env.SMTP_HOST && process.env.SMTP_USER) {
+    // Coba kirim via SMTP
+    if (process.env.SMTP_USER) {
         try {
             const transporter = nodemailer.createTransport({
-                host: process.env.SMTP_HOST,
-                port: process.env.SMTP_PORT || 587,
-                secure: process.env.SMTP_SECURE === 'true',
+                service: 'gmail',
                 auth: {
                     user: process.env.SMTP_USER,
                     pass: process.env.SMTP_PASS
@@ -86,7 +76,7 @@ exports.sendOtpEmail = async ({ to, otp, purpose, username = 'User' }) => {
             });
 
             const info = await transporter.sendMail({
-                from: process.env.EMAIL_FROM || '"SatSetFit" <no-reply@satsetfit.com>',
+                from: `"SatSetFit" <${process.env.SMTP_USER}>`,
                 to: to,
                 subject: subject,
                 html: htmlContent,
