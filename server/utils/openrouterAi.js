@@ -1,4 +1,4 @@
-import { OpenRouter } from '@openrouter/sdk';
+const { OpenRouter } = require('@openrouter/sdk');
 
 const client = new OpenRouter({
     apiKey: process.env.OPENROUTER_API_KEY
@@ -8,7 +8,7 @@ const client = new OpenRouter({
 const getOpenrouterAiResponse = async (prompt) => {
     try {
         const response = await client.chat.send({
-            model: '~openai/gpt-latest',
+            model: 'inclusionai/ling-3.0-flash:free',
             messages: [
                 {
                     role: 'user',
