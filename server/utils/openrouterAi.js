@@ -7,15 +7,16 @@ const client = new OpenRouter({
 
 const getOpenrouterAiResponse = async (prompt) => {
     try {
-        const response = await client.chat.send({
-            model: 'inclusionai/ling-3.0-flash:free',
-            messages: [
-                {
-                    role: 'user',
-                    content: prompt,
-                },
-            ],
-        });
+        const response = await client.chat.send(
+            {
+                chatRequest: {
+                    model: 'inclusionai/ling-3.0-flash:free',
+                    messages: [
+                        { role: 'user', content: prompt },
+                    ],
+                }
+            }
+        );
         return response.choices[0].message.content;
     } catch (error) {
         console.error("Error OpenRouter AI:", error);

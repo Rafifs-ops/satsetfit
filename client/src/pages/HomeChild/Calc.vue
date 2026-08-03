@@ -10,9 +10,11 @@ import Chatbot from '@/components/prem-calc-components/Chatbot.vue';
 import { ref, computed, onMounted, watch } from 'vue';
 import { useCalculator } from '@/composables/useCalculator';
 import { useAuthStore } from '@/stores/auth';
+import { useToastStore } from '@/stores/toast';
 
-// Mendapatkan data auth
+// Mendapatkan data auth & toast
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
+const toastStore = useToastStore(); // Store notifikasi toast
 
 const isPremium = computed(() => authStore.user?.isPremium === true); // Proses pengambilan statusPremium
 
@@ -33,9 +35,11 @@ function handleSubmitHitung() {
     const success = hitung(inputData.value); // Panggil logika dari composable dan mengirim argument input data
 
     if (!success) { // Jika fungsi hitung mengembalikan nilai false
-        alert("Silahkan input data diri Anda terlebih dahulu....");
+        toastStore.warning("Silakan lengkapi data diri Anda terlebih dahulu (Usia, Berat, dan Tinggi Badan).", "Data Belum Lengkap");
         return; // Menghentikan eksekusi program
     }
+
+    toastStore.success("Hasil kalkulasi kalori harian Anda berhasil diperbarui!", "Perhitungan Selesai");
 
     // Scroll otomatis
     if (resultSection.value) {

@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import { useToastStore } from '@/stores/toast';
 
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan fungsi dari auth store pinia
+const toastStore = useToastStore(); // Store notifikasi toast
 
 // ----- KONFIGURASI UI MODAL -----
 // State untuk mengontrol tampilan modal
@@ -47,7 +49,7 @@ async function handleUpgrade() {
             onSuccess: async (result) => {
                 /* Pembayaran berhasil! */
                 console.log('Payment Success:', result);
-                alert('Pembayaran berhasil! Akun Anda telah di-upgrade.');
+                toastStore.success('Pembayaran berhasil! Akun Anda telah di-upgrade ke Premium.', 'Upgrade Berhasil');
 
                 // 3. Update status user di database
                 const id = authStore.user.id; // Mendapatkan id dari auth store pinia
@@ -66,25 +68,25 @@ async function handleUpgrade() {
             onPending: (result) => {
                 /* Pembayaran pending */
                 console.log('Payment Pending:', result);
-                alert('Menunggu pembayaran Anda...');
+                toastStore.info('Menunggu penyelesaian pembayaran Anda...', 'Pembayaran Pending');
                 isLoading.value = false;
             },
             onError: (result) => {
                 /* Pembayaran gagal */
                 console.error('Payment Error:', result);
-                alert('Pembayaran gagal. Silakan coba lagi.');
+                toastStore.error('Pembayaran gagal. Silakan coba lagi.', 'Pembayaran Gagal');
                 isLoading.value = false;
             },
             onClose: () => {
                 /* Popup ditutup tanpa transaksi */
-                alert('Anda menutup popup pembayaran.');
+                toastStore.warning('Anda menutup popup pembayaran.', 'Pembayaran Dibatalkan');
                 isLoading.value = false;
             }
         });
 
     } catch (error) {
         console.error('Error upgrading to premium:', error);
-        alert('Terjadi kesalahan. Silakan coba lagi.');
+        toastStore.error('Terjadi kesalahan saat memproses transaksi. Silakan coba lagi.', 'Transaksi Gagal');
         isLoading.value = false;
     }
 }

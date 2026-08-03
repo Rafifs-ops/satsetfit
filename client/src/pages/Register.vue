@@ -2,9 +2,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
+import { useToastStore } from '@/stores/toast';
 
 const router = useRouter(); // Mendapatkan fungsi router untuk pindah halaman
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
+const toastStore = useToastStore(); // Menggunakan store notifikasi toast
 
 // VALIDASI STATUS LOGIN
 const statusLogin = authStore.isAuthenticated; // Mendapatkan data statusLogin
@@ -44,16 +46,17 @@ async function register() {
 
         if (!response.ok) {
             // Jika backend return error (misal email duplikat)
-            alert(result.msg || "Registrasi gagal");
+            toastStore.error(result.msg || "Registrasi gagal", "Registrasi Gagal");
             return; // Stop, jangan pindah halaman
         }
 
         // Jika sukses
-        router.push({ name: "Login" }); // Mengarahkan ke Login page
+        toastStore.success(result.msg || "Akun berhasil dibuat! Silakan verifikasi email Anda.", "Registrasi Berhasil");
+        router.push({ name: "VerifyEmail", query: { email: email.value } }); // Mengarahkan ke halaman verifikasi email
 
     } catch (error) {
         console.error("Error:", error);
-        alert("Terjadi kesalahan jaringan");
+        toastStore.error("Terjadi kesalahan jaringan. Silakan coba lagi.", "Registrasi Gagal");
     } finally {
         isLoading.value = false; // Menonaktifkan tampilan loading
     }

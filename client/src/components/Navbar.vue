@@ -3,8 +3,10 @@ import { computed } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import Profil from './Profil.vue';
 import { useAuthStore } from '@/stores/auth';
+import { useToastStore } from '@/stores/toast';
 
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
+const toastStore = useToastStore(); // Store notifikasi toast
 
 // Mendapatkan status login, output: boolean
 const statusLogin = computed(() => authStore.isAuthenticated);
@@ -12,6 +14,7 @@ const router = useRouter() // Mendapatkan fungsi router untuk pindah halaman
 
 function logout() {
     authStore.logout();
+    toastStore.info("Anda telah berhasil keluar dari akun.", "Logout Berhasil");
     router.push({ name: "Login" }) // Mengarahkan ke Login page
 }
 </script>

@@ -2,6 +2,7 @@
 import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
+import ToastNotification from '@/components/ToastNotification.vue';
 
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan fungsi dari auth store pinia
 
@@ -13,5 +14,6 @@ onMounted(async () => {
 </script>
 
 <template>
+  <ToastNotification />
   <RouterView />
 </template>

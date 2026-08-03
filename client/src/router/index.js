@@ -8,6 +8,8 @@ import Calc from '@/pages/HomeChild/Calc.vue'
 import Food from '@/pages/HomeChild/Food.vue'
 import Excercise from '@/pages/HomeChild/Excercise.vue'
 import Product from '@/pages/HomeChild/Product.vue'
+import VerifyEmail from '@/pages/VerifyEmail.vue'
+import ForgotPassword from '@/pages/ForgotPassword.vue'
 
 // Middleware untuk halaman yang membutuhkan login (seperti pages di folder HomeChild)
 const requireAuth = async (to, from, next) => {
@@ -75,6 +77,16 @@ const router = createRouter({
       path: "/register",
       name: "Register",
       component: Register
+    },
+    {
+      path: "/verify-email",
+      name: "VerifyEmail",
+      component: VerifyEmail
+    },
+    {
+      path: "/forgot-password",
+      name: "ForgotPassword",
+      component: ForgotPassword
     },
   ]
 })

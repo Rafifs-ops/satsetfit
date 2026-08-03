@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, ref, toRefs, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import { useToastStore } from '@/stores/toast';
 
 const props = defineProps(["hasilHitung"]); // Menerima data hasil perhitungan dari komponen induk(PremCalc.vue)
 const { hasilHitung } = toRefs(props) // Menjaga reaktivitas data/variabel saat menggunakan destruk
@@ -9,6 +10,7 @@ const { hasilHitung } = toRefs(props) // Menjaga reaktivitas data/variabel saat 
 const hasCalculated = computed(() => hasilHitung.value.tdde > 0 && hasilHitung.value.bmi > 0 && hasilHitung.value.bmr > 0);
 
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
+const toastStore = useToastStore(); // Store notifikasi toast
 const userId = authStore.user.id; // Mengakses id dari data store auth
 
 const loading = ref(false); // State default untuk loading
@@ -25,17 +27,23 @@ async function simpanHasil() {
         };
 
         // Menambahkan objek/nilai baru ke database array 'historyResults'
-        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/save/calc-result`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/save/calc-result`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newResult)
         });
+
+        if (!res.ok) {
+            throw new Error("Gagal menyimpan data ke server");
+        }
+
         await authStore.refreshUserData(); // Merefresh data user di auth store agar update dengan data terbaru
-        alert("Hasil Kalkuator berhasil disimpan....")
+        toastStore.success("Hasil kalkulator berhasil disimpan ke riwayat Anda!", "Berhasil Disimpan");
     } catch (error) {
         console.error('Error saat menambahkan field: ', error);
+        toastStore.error("Gagal menyimpan hasil kalkulator. Silakan coba lagi.", "Penyimpanan Gagal");
     } finally {
         loading.value = false // Menghilangkan tampilan loading
     }

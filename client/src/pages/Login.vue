@@ -2,8 +2,10 @@
 import { ref } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
+import { useToastStore } from '../stores/toast';
 
 const authStore = useAuthStore(); // Mendapatkan beberapa variable dan function dari auth store pinia
+const toastStore = useToastStore(); // Menggunakan store notifikasi toast
 const router = useRouter(); // Mengambil fungsi router untuk pindah halaman
 
 // VALIDASI STATUS LOGIN
@@ -21,9 +23,15 @@ async function handleLogin() {
   try {
     isLoading.value = true // Mengaktifkan tampilan loading
     await authStore.login(username.value, password.value); // Memproses authentikasi ke backend
+    toastStore.success(`Selamat datang kembali, ${username.value}!`, "Login Berhasil");
     router.push({ name: "Main" }) // Mengarahkan ke Home page
   } catch (error) {
-    alert("Username / password salah... Silahkan ulangi...");
+    if (error.data && error.data.needVerification) {
+      toastStore.info(error.message || "Email belum diverifikasi. Kode OTP telah dikirim ke email Anda.", "Verifikasi Diperlukan");
+      router.push({ name: "VerifyEmail", query: { email: error.data.email } });
+    } else {
+      toastStore.error(error.message || "Username / password salah... Silahkan ulangi...", "Login Gagal");
+    }
   } finally {
     isLoading.value = false; // Menonaktifkan tampilan loading
   }
@@ -46,10 +54,14 @@ async function handleLogin() {
               placeholder="Enter your username here" required />
           </div>
 
-          <div class="mb-4">
+          <div class="mb-2">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control text-light" id="password" v-model="password"
               placeholder="Enter your password" required />
+          </div>
+
+          <div class="text-end mb-4">
+            <RouterLink to="/forgot-password" class="forgot-link">Lupa Password?</RouterLink>
           </div>
 
           <button v-if="isLoading" type="disabled" class="btn btn-glow w-100">
@@ -202,5 +214,17 @@ async function handleLogin() {
 .form-footer a:hover {
   text-decoration: underline;
   filter: brightness(1.2);
+}
+
+.forgot-link {
+  color: #9ec8b9;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: #A3FFD6;
+  text-decoration: underline;
 }
 </style>

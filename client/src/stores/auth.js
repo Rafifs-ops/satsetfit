@@ -21,7 +21,9 @@ export const useAuthStore = defineStore('auth', {
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.msg || 'Login gagal');
+                    const err = new Error(errorData.msg || 'Login gagal');
+                    err.data = errorData;
+                    throw err;
                 }
 
                 // 9. Di sisi frontend, ada state management untuk merequest session (cookie otomatis disimpan) dan simpan data(objek) session di state management
