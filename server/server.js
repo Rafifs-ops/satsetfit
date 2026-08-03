@@ -1,3 +1,6 @@
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
+
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -18,8 +21,8 @@ app.use(express.json()); // Mem-parsing body JSON
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('✅ MongoDB Connected'))
-.catch(err => console.error('❌ MongoDB Connection Error:', err));
+    .then(() => console.log('✅ MongoDB Connected'))
+    .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 // Import Routes
 const paymentRoutes = require('./routes/payment');
