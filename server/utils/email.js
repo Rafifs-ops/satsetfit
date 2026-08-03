@@ -68,15 +68,11 @@ exports.sendOtpEmail = async ({ to, otp, purpose, username = 'User' }) => {
     if (process.env.SMTP_USER) {
         try {
             const transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
+                service: 'gmail',
                 auth: {
                     user: process.env.SMTP_USER,
                     pass: process.env.SMTP_PASS
                 },
-                // 👇 TAMBAHKAN BARIS INI UNTUK MEMAKSA IPv4 👇
-                family: 4
             });
 
             const info = await transporter.sendMail({

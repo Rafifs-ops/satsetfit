@@ -39,5 +39,5 @@ app.use('/api/premium', premiumRoutes);
 
 // --- Jalankan Server ---
 app.listen(port, () => {
-    console.log(`SatSetFit Backend (Express.js) listening on http://localhost:${port}`);
+    console.log(`SatSetFit Backend (Express.js) is Online`);
 });
