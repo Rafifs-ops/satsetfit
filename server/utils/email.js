@@ -1,4 +1,5 @@
-const nodemailer = require('nodemailer');
+const { BrevoClient, BrevoError, UnauthorizedError, TooManyRequestsError } = require('@getbrevo/brevo');
+// const nodemailer = require('nodemailer');
 
 /**
  * Mengirim email berisi kode OTP untuk Verifikasi Email atau Reset Password.
@@ -67,26 +68,41 @@ exports.sendOtpEmail = async ({ to, otp, purpose, username = 'User' }) => {
     // Coba kirim via SMTP
     if (process.env.SMTP_USER) {
         try {
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.SMTP_USER,
-                    pass: process.env.SMTP_PASS
-                },
-            });
+            // const transporter = nodemailer.createTransport({
+            //     service: 'gmail',
+            //     auth: {
+            //         user: process.env.SMTP_USER,
+            //         pass: process.env.SMTP_PASS
+            //     },
+            // });
+            // const info = await transporter.sendMail({
+            //     from: `"SatSetFit" <${process.env.SMTP_USER}>`,
+            //     to: to,
+            //     subject: subject,
+            //     html: htmlContent,
+            //     text: `${title}\n\nHalo ${username}, kode OTP Anda adalah ${otp} (berlaku 5 menit).`
+            // });
 
-            const info = await transporter.sendMail({
-                from: `"SatSetFit" <${process.env.SMTP_USER}>`,
-                to: to,
+            const brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
+            const result = await brevo.transactionalEmails.sendTransacEmail({
                 subject: subject,
-                html: htmlContent,
-                text: `${title}\n\nHalo ${username}, kode OTP Anda adalah ${otp} (berlaku 5 menit).`
+                htmlContent: htmlContent,
+                sender: { name: 'SatSetFit', email: process.env.SMTP_USER },
+                to: [{ email: to, name: username }],
             });
 
-            console.log(`[EMAIL SENT] Message ID: ${info.messageId}`);
+            console.log(`[EMAIL SENT] Message ID: ${result.messageId}`);
             return true;
-        } catch (error) {
-            console.error('[EMAIL ERROR] Gagal mengirim email via SMTP:', error.message);
+        } catch (err) {
+            // console.error('[EMAIL ERROR] Gagal mengirim email via SMTP:', error.message);
+            if (err instanceof UnauthorizedError) {
+                console.error('Invalid API key');
+            } else if (err instanceof TooManyRequestsError) {
+                const retryAfter = err.rawResponse.headers['retry-after'];
+                console.error(`Rate limited. Retry after ${retryAfter}s`);
+            } else if (err instanceof BrevoError) {
+                console.error(`API error ${err.statusCode}:`, err.message);
+            }
             // Tetap return true di development jika gagal SMTP, agar user tetap bisa tes dari OTP log
             return true;
         }
