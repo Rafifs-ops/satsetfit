@@ -88,7 +88,14 @@ const router = createRouter({
       name: "ForgotPassword",
       component: ForgotPassword
     },
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return {
+      top: 0,
+      behavior: 'smooth',
+    }
+  }
+
 })
 
 export default router

@@ -56,7 +56,7 @@ async function handleLogin() {
 
           <div class="mb-2">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control text-light" id="password" v-model="password"
+            <input type="password" class="form-control" id="password" v-model="password"
               placeholder="Enter your password" required />
           </div>
 
@@ -91,49 +91,41 @@ async function handleLogin() {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem;
-  background-color: #1C1678;
-  /* Diganti dari var(--bg-deep-space) */
+  padding: 1rem;
+  /* Reduced padding for small screens */
   font-family: 'Inter', sans-serif;
-  /* Diganti dari var(--font-family) */
-  background-image:
-    linear-gradient(rgba(158, 200, 185, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(158, 200, 185, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background: linear-gradient(160deg, #1C1678 0%, #8576FF 50%, #A3FFD6 100%);
+  background-size: cover;
 }
 
 /* --- Glassmorphism Card --- */
 .glass-card {
   width: 100%;
   max-width: 450px;
-  background: #8576FF;
-  /* Semi-transparent container */
+  background: #1C1678;
   backdrop-filter: blur(15px);
-  /* The frosted glass effect */
   border-radius: 20px;
   border: 1px solid rgba(92, 131, 116, 0.2);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  color: #A3FFD6;
-  /* Diganti dari var(--text-glow) */
+  color: #9EC8B9;
 }
 
 .card-body {
-  padding: 2.5rem;
+  padding: 2rem 1.5rem;
+  /* Reduced padding for small screens */
 }
 
 /* --- Header --- */
 .card-title {
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #A3FFD6;
-  /* Diganti dari var(--text-glow) */
+  color: #9EC8B9;
   text-shadow: 0 0 10px rgba(158, 200, 185, 0.5);
 }
 
 .card-subtitle {
   font-size: 1rem;
-  color: #A3FFD6;
-  /* Diganti dari var(--text-glow) */
+  color: #9EC8B9;
   opacity: 0.7;
 }
 
@@ -145,14 +137,12 @@ async function handleLogin() {
 
 .form-control {
   background-color: rgba(9, 38, 53, 0.7);
-  /* Darker transparent input */
-  border: 1px solid #5c8374;
-  /* Diganti dari var(--accent-teal) */
+  border: 1px solid #5C8374;
   border-radius: 10px;
-  color: #A3FFD6;
-  /* Diganti dari var(--text-glow) */
+  color: #9EC8B9;
   padding: 0.85rem 1rem;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .form-control::placeholder {
@@ -162,10 +152,8 @@ async function handleLogin() {
 /* --- Input Focus Effect (The Glow) --- */
 .form-control:focus {
   background-color: rgba(9, 38, 53, 0.7);
-  color: #A3FFD6;
-  /* Diganti dari var(--text-glow) */
-  border-color: #9ec8b9;
-  /* Diganti dari var(--text-glow) */
+  color: #9EC8B9;
+  border-color: #9EC8B9;
   outline: none;
   box-shadow: 0 0 15px rgba(158, 200, 185, 0.4);
 }
@@ -173,11 +161,9 @@ async function handleLogin() {
 /* --- Custom Glow Button --- */
 .btn-glow {
   background: #A3FFD6;
-  /* Diganti dari var(--accent-teal) */
   border: none;
   border-radius: 10px;
   color: #092635;
-  /* Diganti dari var(--bg-deep-space) */
   font-size: 1.1rem;
   font-weight: 700;
   padding: 0.85rem;
@@ -186,8 +172,7 @@ async function handleLogin() {
 }
 
 .btn-glow:hover {
-  background-color: #5c8374;
-  /* Diganti dari var(--accent-teal) */
+  background-color: #5C8374;
   color: #fff;
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(92, 131, 116, 0.5);
@@ -204,8 +189,7 @@ async function handleLogin() {
 }
 
 .form-footer a {
-  color: #A3FFD6;
-  /* Diganti dari var(--text-glow) */
+  color: #9EC8B9;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -217,7 +201,7 @@ async function handleLogin() {
 }
 
 .forgot-link {
-  color: #9ec8b9;
+  color: #9EC8B9;
   font-size: 0.88rem;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -226,5 +210,20 @@ async function handleLogin() {
 .forgot-link:hover {
   color: #A3FFD6;
   text-decoration: underline;
+}
+
+/* --- 🌟 RESPONSIVE ADJUSTMENTS 🌟 --- */
+@media (min-width: 768px) {
+  .form-wrapper {
+    padding: 2rem;
+  }
+
+  .card-body {
+    padding: 2.5rem;
+  }
+
+  .card-title {
+    font-size: 2.25rem;
+  }
 }
 </style>

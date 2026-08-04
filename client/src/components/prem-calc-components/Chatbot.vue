@@ -166,7 +166,6 @@ const renderMarkdown = (text) => {
 
                 <div class="chat-modal-body">
                     <h4 class="modal-title">SatSetFit Chatbot AI</h4>
-                    <i class="text-center mb-2">Model : Gemini 2.5 Flash</i>
 
                     <div class="chat-window" ref="chatWindow">
                         <div v-for="message in messages" :key="message.id"
